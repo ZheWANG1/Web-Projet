@@ -1,0 +1,210 @@
+a {
+  text-decoration: none;
+}
+
+h1 {
+  color: #bbb;
+}
+
+.MainPage {
+  text-align: center;
+  
+}
+
+.MainPage-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.MainPage-header {
+  display: inline-block;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  text-align: center;
+}
+
+.MainPage-body {
+  background-attachment: fixed;
+}
+
+.MainPage-link {
+  color: #61dafb;
+}
+
+#logo {
+  height: 50px;
+  float: left;
+}
+
+#homepage-header {
+  padding: 20px;
+  width: 100%+20px;
+  text-align: center;
+  background-color: #121114;
+  margin: -10px -10px 10px -10px;
+  border-bottom: 3px solid rgb(24, 24, 28)
+}
+
+#homepage-header div {
+  display: inline-block;
+}
+
+
+
+#search {
+  width: 70%;
+  position: relative;
+  top: 10px;
+}
+
+#rbar {
+  width: 60%;
+  height: 30px;
+}
+
+#rbutton {
+  width: 10%;
+  font-size: 15px;
+  color: rgb(72, 11, 224);
+  background-color: rgb(189, 224, 60);
+  border-color: aqua;
+  border-radius: 10px;
+}
+
+#search div {
+  width: 70%;
+  text-align: left;
+  margin-top: 10px;
+}
+
+#search label {
+  margin: 0 10px;
+}
+
+#zoneleft {
+  width: 20%;
+  float: left;
+  background-color: rgb(48, 48, 48, 0.5);
+  min-height: 860px;
+  padding: 0 20px;
+  color: white;
+  font-family: justify;
+  text-align:left;
+}
+
+#zoneright {
+  width: 100%;
+}
+
+#zoneNewC {
+  background-color: #303030;
+  
+  width: 70%;
+  min-height: 80px;
+  padding: 20px;
+  display:inline-block;
+}
+
+#zoneNewC textarea {
+  resize: none;
+  width: 60%;
+}
+
+#zoneNewC #newC {
+
+  width : 60px;
+  height : 60px;
+  background-color : #0d6efd;
+  color: #FFF;
+  border-radius :  50px;
+  text-align: center;
+  box-shadow: 2px,2px, 3px, #000;
+}
+
+#zoneC {
+  background-color: #121114;
+  width: 70%;
+  margin-left: 25%;
+  min-height: 800px;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+#profile {
+  min-width: 10%;
+  float: right;
+}
+
+
+.commentaire {
+  border: 1px solid #333;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.commentaire img {
+  width: 80px;
+  float: left;
+}
+
+.commentaire h4 {
+  width: 50%;
+  margin-left: 15%;
+}
+
+.commentaire date {
+  width: 20%;
+  float: right;
+  font-style: italic;
+  position: relative;
+  top: -40px;
+}
+
+.commentaire p {
+  width: 80%;
+  margin-left: 15%;
+  background-color: #fff;
+}
+
+#loginbox {
+  
+  margin: 0 30%;
+  padding: 20px;
+  text-align: center;
+  
+  border-style: groove;
+  border-radius: 30px;
+  border-color: beige;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #1e262b;
+
+}
+
+#loginbox label{
+  text-align : left;
+}
+
+#loginbox input {
+  width: 50%;
+  margin: 10px 0;
+}
+
+#annuler {
+  margin-left: 20px;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1000000deg);
+  }
+}
