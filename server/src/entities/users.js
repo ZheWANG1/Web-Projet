@@ -18,8 +18,8 @@ class Users {
       })
     });
   }
-
-  get(userid) {
+  //get
+  get(username) {
     return new Promise((resolve, reject) => {
       // const user = {
       //    login: "pikachu",
@@ -28,21 +28,21 @@ class Users {
       //    firstname: "pika"
       // }; // À remplacer par une requête bd
 
-      const user = db.users.find({ id: userid });
+      db.users.find({ login: username },function (err, docs) {
+        let res_user = docs
+        if (!res_user) {
+          reject()
+        }
+        else {
+          resolve(res_user)
+        }
+      });
 
-      if (!user) {
-        //erreur
-        reject();
-      } else {
-        // if(userid == 1) {
-        //   resolve(user);
-        // } else {
-        //   resolve(null);
-        // }
-        resolve(user)
-      }
+
     });
   }
+
+  
 
   async exists(login) {
     return new Promise((resolve, reject) => {
@@ -57,13 +57,24 @@ class Users {
 
   checkpassword(login, password) {
     return new Promise((resolve, reject) => {
-      let userid = db.users.find({ login: login, password: password }, { _id: 1 }); // À remplacer par une requête bd
-      if (false) {
-        //erreur
-        reject();
-      } else {
-        resolve(userid);
-      }
+      this.db.users.find({ login: login, password: password }, function (err, docs) {
+        let username = docs[0].login;
+        if (err) {
+          reject();
+        }
+        else {
+          resolve(username);
+        }
+      })
+
+
+      // let login = db.users.find({ login: login, password: password }, { _id: 1 }); // À remplacer par une requête bd
+      // if (false) {
+      //   //erreur
+      //   reject();
+      // } else {
+      //   resolve(userid);
+      // }
     });
   }
 

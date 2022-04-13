@@ -8,7 +8,7 @@ h1 {
 
 .MainPage {
   text-align: center;
-  
+
 }
 
 .MainPage-logo {
@@ -64,12 +64,13 @@ h1 {
 }
 
 #rbutton {
-  width: 10%;
+  width: 80px;
+  height: 35px;
+  border-radius: 20px;
+  background-color: #FFF;
   font-size: 15px;
-  color: rgb(72, 11, 224);
-  background-color: rgb(189, 224, 60);
   border-color: aqua;
-  border-radius: 10px;
+  margin-left: 10px;
 }
 
 #search div {
@@ -85,47 +86,53 @@ h1 {
 #zoneleft {
   width: 20%;
   float: left;
-  background-color: rgb(48, 48, 48, 0.5);
+  background-color: rgb(22,22,26);
   min-height: 860px;
   padding: 0 20px;
   color: white;
   font-family: justify;
-  text-align:left;
+  text-align: left;
+  border-radius: 5px;
+  margin-left: 5%;
+  border: 2px solid rgb(24, 24, 28)
 }
 
 #zoneright {
-  width: 100%;
+  width: 90%;
 }
 
 #zoneNewC {
   background-color: #303030;
-  
-  width: 70%;
+
+  width: 60%;
   min-height: 80px;
   padding: 20px;
-  display:inline-block;
+  display: inline-block;
 }
 
 #zoneNewC textarea {
+  margin-right: 5%;
   resize: none;
-  width: 60%;
+  width: 95%;
+  border-radius: 10px;
 }
 
 #zoneNewC #newC {
+  margin-right: 5%;
+  text-align: right;
+}
 
-  width : 60px;
-  height : 60px;
-  background-color : #0d6efd;
-  color: #FFF;
-  border-radius :  50px;
-  text-align: center;
-  box-shadow: 2px,2px, 3px, #000;
+#zoneNewC #newC button {
+  width: 100px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #FFF;
 }
 
 #zoneC {
   background-color: #121114;
-  width: 70%;
-  margin-left: 25%;
+  width: 60%;
+  margin-left: 35%;
   min-height: 800px;
   margin-top: 20px;
   padding: 20px;
@@ -134,6 +141,14 @@ h1 {
 #profile {
   min-width: 10%;
   float: right;
+}
+
+#profile button {
+  width: 100px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #FFF;
+  margin-left: 10px;
 }
 
 
@@ -168,11 +183,11 @@ h1 {
 }
 
 #loginbox {
-  
+
   margin: 0 30%;
   padding: 20px;
   text-align: center;
-  
+
   border-style: groove;
   border-radius: 30px;
   border-color: beige;
@@ -182,8 +197,8 @@ h1 {
 
 }
 
-#loginbox label{
-  text-align : left;
+#loginbox label {
+  text-align: left;
 }
 
 #loginbox input {
@@ -204,6 +219,7 @@ h1 {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(1000000deg);
   }

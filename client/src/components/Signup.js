@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { Link, Navigate } from "react-router-dom";
+import axios from 'axios';
+
+const api = axios.create({
+    baseURL: 'http://localhost:4000/api',
+    timeout: 1000,
+    headers: { 'Content-Type': 'application/json' }
+})
 
 class Signup extends Component {
     constructor(props) {
@@ -11,7 +18,22 @@ class Signup extends Component {
     onSubmit(event) {
         event.preventDefault();
         this.props.setConnexionState("connected");
-        //this.props.setHomepage();
+        api.post('/user',
+            {
+                login: event.target.login.value,
+                password: event.target.password.value,
+                lastname: event.target.nom.value,
+                firstname: event.target.prenom.value
+
+                // confirmpassword: event.target.confirmpassword.value
+            })
+            .then(res => {
+                console.log(res)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
 

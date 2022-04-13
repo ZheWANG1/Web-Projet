@@ -59,9 +59,7 @@ class App extends Component {
 
   setConnexionState = (v) => {
     this.setState({ connected: v });
-    
   }
-
 
   setHomepage = () => {
     this.setState({ user: "homepage" });
@@ -73,8 +71,8 @@ class App extends Component {
 
   changetab() {
     if (this.state.user == "login") {
-      return <Login setHomepage={this.setHomepage} setConnexionState={this.setConnexionState} ConnexionState = {this.state.connected}> </Login>
-      
+      return <Login setHomepage={this.setHomepage} setConnexionState={this.setConnexionState} ConnexionState={this.state.connected}> </Login>
+
     }
     else {
       if (this.state.user == "homepage") {
@@ -94,32 +92,21 @@ class App extends Component {
   render() {
 
     return (
-
-      // <Router>
-
-
-      /*
-      <div className="MainPage">
-
-        <div className="MainPage-body">
-          {this.changetab()}
-        </div>
-
-      </div>*/
       <div className="MainPage">
         <Routes>
           <Route className="MainPage-body" path="/*" element={<Homepage openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
           </Route>
-          <Route path="/login" element={<Login setHomepage={this.setHomepage} setConnexionState={this.setConnexionState}  connected = {this.state.connected} />}>
+          <Route path="/login" element={<Login setHomepage={this.setHomepage} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
-          <Route path="/signup" element={<Signup setConnexionState={this.setConnexionState}  connected = {this.state.connected} />}>
-
+          <Route path="/signup" element={<Signup setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
-          <Route path="/homepage" element={<Homepage />}></Route>
+          <Route path="/homepage" element={<Homepage openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
+          </Route>
+          <Route path="/profil" element={<Profil openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>}></Route>
 
         </Routes>
       </div>
-  
+
     );
   }
 }

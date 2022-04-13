@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
 import '../App.css';
 import NavigationPannel from './NavigationPannel';
+import axios from 'axios';
+
+const api = axios.create({
+    baseURL: 'http://localhost:4000/api',
+    withCredentials: true,
+    timeout: 1000,
+    headers: { 'Content-Type': 'application/json' }
+})
+
 
 class Profil extends Component {
     constructor(props) {
         super(props);
         this.friendList = [1, 2, 4, 5];
+        api.get('/user/self')
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+
+        //this.userinfo = api.get('/user/self');
 
     }
 
@@ -44,6 +65,10 @@ class Profil extends Component {
                                 <date>02/02/2022</date>
                                 <p>hell yeah , how a man that stupid could be elected as the president of our land, that brainless noob did all useless thing possible in the world, his policies are only done by mouse nothing real was done , all that bastard want is
                                     money he doesn't care how the pandemic is going and how his people are diying</p>
+                            </div>
+
+                            <div>
+                                <p>{this.state.user}</p>
                             </div>
                         </div>
 

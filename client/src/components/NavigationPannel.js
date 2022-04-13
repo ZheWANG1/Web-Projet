@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import logo from './logo512.png';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class NavigationPannel extends Component {
 
@@ -14,11 +14,11 @@ class NavigationPannel extends Component {
         if (this.props.connected == "notconnected") {
             return (
                 <div>
-                    <Link to = "/login">
-                    <button type="button" onClick={this.props.setLogin}>Log in</button>
+                    <Link to="/login">
+                        <button type="button" onClick={this.props.setLogin}>Log in</button>
                     </Link>
-                    <Link to = "/signup">
-                    <button type="button" onClick={this.props.setSignup}>Enregistement</button>
+                    <Link to="/signup">
+                        <button type="button" onClick={this.props.setSignup}>Enregistement</button>
                     </Link>
                 </div>
             )
@@ -26,8 +26,12 @@ class NavigationPannel extends Component {
             if (this.props.connected == "connected") {
                 return (
                     <div>
-                        <button type="button" onClick={this.props.openProfil}>Profile</button>
-                        <button type="button" onClick={() => { this.props.setLogout() }}>Log out</button>
+                        <Link to="/profil">
+                            <button type="button" onClick={this.props.openProfil}>Profile</button>
+                        </Link>
+                        <Link to="/Homepage">
+                            <button type="button" onClick={() => { this.props.setLogout() }}>Log out</button>
+                        </Link>
                     </div>
                 )
             }
@@ -39,7 +43,9 @@ class NavigationPannel extends Component {
             <div>
                 <header id="homepage-header">
                     <div id="divlogo">
-                        <img src={logo} alt="logo" id="logo"></img>
+                        <Link to="/Homepage">
+                            <img src={logo} alt="logo" id="logo"></img>
+                        </Link>
                     </div>
                     <div id="search">
                         <form action="">

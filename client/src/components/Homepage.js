@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import NavigationPannel from './NavigationPannel';
 import logo from './logo512.png';
-
+import axios from 'axios';
 
 const containerCSS = {
 
@@ -16,11 +16,26 @@ const containerCSS = {
     boxShadow: "2px,2px, 3px, #000",
 };
 
+const api = axios.create({
+    baseURL: 'http://localhost:4000/api',
+    timeout: 1000,
+    headers: { 'Content-Type': 'application/json' }
+})
+
+const apimessages = axios.create({
+    baseURL: 'http://localhost:4000/apimessages',
+    timeout: 1000,
+    headers: { 'Content-Type': 'application/json' }
+})
+
 class Homepage extends Component {
     constructor(props) {
         super(props);
+        this.onSubmit = this.onSubmit.bind(this)
+    }
 
-
+    onSubmit(event) {
+        //apimessages.post('/user' style={containerCSS}
     }
 
     render() {
@@ -40,11 +55,13 @@ class Homepage extends Component {
                                 <textarea rows="5" cols="80" type="text"></textarea>
                             </div>
 
-
-                            <div id="newC" style={containerCSS} onClick="">+</div>
+                        <div id="newC">
+                            <button type="button" class="btn" onClick={this.onSubmit}>Envoyer</button>
+                        </div>
+                            
 
                         </div>
-
+                        
 
                         <div id="zoneC">
                             <div class="commentaire">
@@ -61,10 +78,7 @@ class Homepage extends Component {
                                 <p>hell yeah , how a man that stupid could be elected as the president of our land, that brainless noob did all useless thing possible in the world, his policies are only done by mouse nothing real was done , all that bastard want is
                                     money he doesn't care how the pandemic is going and how his people are diying</p>
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>

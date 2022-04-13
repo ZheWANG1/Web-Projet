@@ -13,6 +13,21 @@ function init(db) {
         next();
     });
     const users = new Users.default(db);
+
+    // createUser
+    router.post("/user", (req, res) => {
+        const { login, password, lastname, firstname } = req.body;
+        if (!login || !password || !lastname || !firstname) {
+            res.status(400).send("Missing fields");
+        } else {
+            users.create(login, password, lastname, firstname)
+                .then((user_id) => res.status(201).send({ id: user_id }))
+                .catch((err) => res.status(500).send(err));
+        }
+
+    });
+
+    //login 
     router.post("/user/login", async (req, res) => {
         try {
             const { login, password } = req.body;
@@ -31,8 +46,8 @@ function init(db) {
                 });
                 return;
             }
-            let userid = await users.checkpassword(login, password);
-            if (userid) {
+            let username = await users.checkpassword(login, password);
+            if (username) {
                 // Avec middleware express-session
                 req.session.regenerate(function (err) {
                     if (err) {
@@ -43,7 +58,7 @@ function init(db) {
                     }
                     else {
                         // C'est bon, nouvelle session créée
-                        req.session.userid = userid;
+                        req.session.username = username;
                         res.status(200).json({
                             status: 200,
                             message: "Login et mot de passe accepté"
@@ -69,9 +84,28 @@ function init(db) {
             });
         }
     });
-
+    //getSelf
     router
-        .route("/user/:user_id(\\d+)")
+        .route("/user/self")
+        .get(async (req, res) => {
+        try{
+            const user = await users.get(req.session.username);
+            if (!user)
+                res.sendStatus(404);
+            else
+                res.send(user);
+        }
+        catch (e){
+            console.log(e);
+            res.status(501).send(e)
+
+        }
+    
+    })
+
+    //getUser
+    router
+        .route("/user/:login")
         .get(async (req, res) => {
             try {
                 const user = await users.get(req.params.user_id);
@@ -86,39 +120,27 @@ function init(db) {
         })
         .delete((req, res, next) => res.send(`delete user ${req.params.user_id}`));
 
-    router.put("/user", (req, res) => {
-        const { login, password, lastname, firstname } = req.body;
-        if (!login || !password || !lastname || !firstname) {
-            res.status(400).send("Missing fields");
-        } else {
-            users.create(login, password, lastname, firstname)
-                .then((user_id) => res.status(201).send({ id: user_id }))
-                .catch((err) => res.status(500).send(err));
-        }
-
-    });
-
-    router.post("/user/:user_id(\\d+)/message", (req, res) => {
-        const { user_id } = req.params;
-        const { message } = req.body;
-        if (!message) {
-            res.status(400).send("Missing fields");
-        } else {
-            users.addMessage(user_id, message)
-                .then(() => res.sendStatus(201))
-                .catch((err) => res.status(500).send(err));
-        }
-    });
-
-    router.post("user/user_id/message", async (req, res) => {
-        let tab = []
-        const user = await users.get(req.params.user_id);
-        var message = req.body;
-        tab.push(message)
-        res.send(message)
 
 
-    });
+    //logout
+    router
+        .route("/user/:user_id/logout")
+        .delete((req, res) => {
+            req.session.destroy((err) => {
+                if (err) {
+                    res.status(500).json({
+                        status: 500,
+                        message: "Erreur interne"
+                    });
+                }
+                else {
+                    res.status(200).json({
+                        status: 200,
+                        message: "Logout réussi"
+                    });
+                }
+            });
+        });
 
 
     router.post("user/create", (req, res) => {
@@ -133,9 +155,6 @@ function init(db) {
             res.status(200).body({ id: userid });
         }
     });
-
-
-
 
     return router;
 }
