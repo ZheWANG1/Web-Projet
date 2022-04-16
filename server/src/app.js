@@ -29,7 +29,12 @@ app.use(cors({
  }));
 
 app.use(session({
-    secret: "technoweb rocks"
+    secret: "technoweb rocks",
+    cookie : {
+        sameSite: process.env.NODE_ENV === "production"?"none":"lax"
+    }
+
+
 }));
 
 app.use('/api', api.default(db));

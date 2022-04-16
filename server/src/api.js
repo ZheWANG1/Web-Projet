@@ -61,7 +61,8 @@ function init(db) {
                         req.session.username = username;
                         res.status(200).json({
                             status: 200,
-                            message: "Login et mot de passe accepté"
+                            message: "Login et mot de passe accepté",
+                            test : req.session.username
                         });
                     }
                 });
@@ -89,6 +90,7 @@ function init(db) {
         .route("/user/self")
         .get(async (req, res) => {
         try{
+            console.log("req. session",req.session)
             const user = await users.get(req.session.username);
             if (!user)
                 res.sendStatus(404);
@@ -97,7 +99,7 @@ function init(db) {
         }
         catch (e){
             console.log(e);
-            res.status(501).send(e)
+            res.status(500).send(e)
 
         }
     
@@ -108,7 +110,7 @@ function init(db) {
         .route("/user/:login")
         .get(async (req, res) => {
             try {
-                const user = await users.get(req.params.user_id);
+                const user = await users.get(req.params.login);
                 if (!user)
                     res.sendStatus(404);
                 else

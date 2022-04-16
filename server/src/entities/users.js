@@ -28,7 +28,7 @@ class Users {
       //    firstname: "pika"
       // }; // À remplacer par une requête bd
 
-      db.users.find({ login: username },function (err, docs) {
+      this.db.users.find({ login: username },function (err, docs) {
         let res_user = docs
         if (!res_user) {
           reject()

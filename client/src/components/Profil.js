@@ -4,8 +4,9 @@ import NavigationPannel from './NavigationPannel';
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:4000/api',
     withCredentials: true,
+    baseURL: 'http://localhost:4000/api',
+    
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
 })
@@ -15,7 +16,7 @@ class Profil extends Component {
     constructor(props) {
         super(props);
         this.friendList = [1, 2, 4, 5];
-        api.get('/user/self')
+        this.info = api.get('/user/self')
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -68,7 +69,7 @@ class Profil extends Component {
                             </div>
 
                             <div>
-                                <p>{this.state.user}</p>
+                                <p>{this.info}</p>
                             </div>
                         </div>
 
