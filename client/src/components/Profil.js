@@ -31,16 +31,6 @@ class Profil extends Component {
         return items;
     }
 
-
-    self = async () => {
-        const response = await api.get('/user/self')
-        response.then(res => {
-            console.log(res.data);
-            this.info = res.data
-
-        })
-        return this.info;
-    }
     render() {
         return (
             <div>
