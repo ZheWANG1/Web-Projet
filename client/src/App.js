@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
 import Logout from './components/Logout';
@@ -7,7 +6,7 @@ import Signup from './components/Signup';
 import Profil from './components/Profil';
 import NavigationPannel from './components/NavigationPannel';
 import Homepage from './components/Homepage';
-
+import axios from 'axios';
 
 import {
   BrowserRouter as Router,
@@ -18,6 +17,13 @@ import {
 
 } from "react-router-dom";
 
+const api = axios.create({
+  withCredentials: true,
+  baseURL: 'http://localhost:4000/api',
+  timeout: 1000,
+  headers: { 'Content-Type': 'application/json' }
+
+})
 
 function random(n) {
   let res = Math.random() * n;
@@ -34,6 +40,10 @@ class App extends Component {
       user: "homepage",
       connected: "notconnected"
     };
+
+    
+
+
     this.setlogout = this.setLogout.bind(this);
     this.changetab = this.changetab.bind(this);
     this.setlogin = this.setLogin.bind(this);

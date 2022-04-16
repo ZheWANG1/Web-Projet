@@ -4,6 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 
 const api = axios.create({
+    withCredentials: true,
     baseURL: 'http://localhost:4000/api',
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }

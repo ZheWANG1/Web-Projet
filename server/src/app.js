@@ -20,9 +20,6 @@ db.users.loadDatabase();
 db.messages.loadDatabase();
 db.friends.loadDatabase();
 
-//app.use(cors());
-
-
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000'   // IP sur laquelle tourne votre client
@@ -30,7 +27,10 @@ app.use(cors({
 
 app.use(session({
     secret: "technoweb rocks",
+    resave : true,
+    saveUninitialized: true,
     cookie : {
+        //secure : true ,
         sameSite: process.env.NODE_ENV === "production"?"none":"lax"
     }
 

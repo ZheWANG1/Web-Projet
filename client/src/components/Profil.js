@@ -6,9 +6,10 @@ import axios from 'axios';
 const api = axios.create({
     withCredentials: true,
     baseURL: 'http://localhost:4000/api',
-    
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
+
+
 })
 
 
@@ -16,19 +17,10 @@ class Profil extends Component {
     constructor(props) {
         super(props);
         this.friendList = [1, 2, 4, 5];
-        this.info = api.get('/user/self')
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-
-        //this.userinfo = api.get('/user/self');
-
+        api.get('/user/self').then(res => {
+            document.getElementById("un").innerHTML = "Login : " + res.data[0].login;
+            //this.info = res.data;
+        })
     }
 
     listItems() {
@@ -39,12 +31,23 @@ class Profil extends Component {
         return items;
     }
 
+
+    self = async () => {
+        const response = await api.get('/user/self')
+        response.then(res => {
+            console.log(res.data);
+            this.info = res.data
+
+        })
+        return this.info;
+    }
     render() {
         return (
             <div>
                 <NavigationPannel openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
+                        <p id="un"></p>
                         <p>Lorem ipsum dolor sit amet, sequat eu.</p>
                         <ul>
                             {this.listItems()}
@@ -69,7 +72,9 @@ class Profil extends Component {
                             </div>
 
                             <div>
-                                <p>{this.info}</p>
+                                <p>---------</p>
+
+                                <p>---------</p>
                             </div>
                         </div>
 

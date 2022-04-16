@@ -47,6 +47,7 @@ function init(db) {
                 return;
             }
             let username = await users.checkpassword(login, password);
+            
             if (username) {
                 // Avec middleware express-session
                 req.session.regenerate(function (err) {
@@ -59,6 +60,7 @@ function init(db) {
                     else {
                         // C'est bon, nouvelle session créée
                         req.session.username = username;
+                        console.log("req.session : " , req.session.username)
                         res.status(200).json({
                             status: 200,
                             message: "Login et mot de passe accepté",
@@ -90,8 +92,9 @@ function init(db) {
         .route("/user/self")
         .get(async (req, res) => {
         try{
-            console.log("req. session",req.session)
+            
             const user = await users.get(req.session.username);
+            await console.log("req. session",req.session.username)
             if (!user)
                 res.sendStatus(404);
             else
