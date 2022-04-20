@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import NavigationPannel from './NavigationPannel';
+import Message from './Message';
 import axios from 'axios';
 
 const api = axios.create({
@@ -8,8 +9,13 @@ const api = axios.create({
     baseURL: 'http://localhost:4000/api',
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
+})
 
-
+const apimessages = axios.create({
+    withCredentials: true,
+    baseURL: 'http://localhost:4000/apimessages',
+    timeout: 1000,
+    headers: { 'Content-Type': 'application/json' }
 })
 
 
@@ -17,10 +23,21 @@ class Profil extends Component {
     constructor(props) {
         super(props);
         this.friendList = [1, 2, 4, 5];
+        this.state = {
+            userinfo: props.userinfo[0] ? props.userinfo : [{ "login": "login" }],
+            messages: []
+        };
+
         api.get('/user/self').then(res => {
-            document.getElementById("un").innerHTML = "Login : " + res.data[0].login;
-            //this.info = res.data;
+            //document.getElementById("userinfo").innerHTML = "Login : " + res.data[0].login;
+            this.state.userinfo = res.data;
         })
+
+        apimessages.get('/getSelfMessage').then(res => {
+            for (var i = 0; i < res.data.length; i++) {
+                this.state.messages.push(<Message message={res.data[i].message} user={res.data[i].login} id={res.data[i]._id}></Message>);
+            }
+        });
     }
 
     listItems() {
@@ -37,7 +54,11 @@ class Profil extends Component {
                 <NavigationPannel openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
-                        <p id="un"></p>
+                        <div id="userinfo">
+                            <p> Username : {this.state.userinfo[0].login}</p>
+                            <p> Firstname : {this.state.userinfo[0].firstname}</p>
+                            <p> Lastname : {this.state.userinfo[0].lastname}</p>
+                        </div>
                         <p>Lorem ipsum dolor sit amet, sequat eu.</p>
                         <ul>
                             {this.listItems()}
@@ -46,32 +67,16 @@ class Profil extends Component {
 
                     <div id="zoneright">
                         <div id="zoneC">
-                            <div class="commentaire">
-                                <img src="profil.jpeg" alt=""></img>
-                                <h4> Promethee Spathis</h4>
-                                <date>02/02/2022</date>
-                                <p>macron is totally stupid</p>
-                            </div>
-
-                            <div class="commentaire">
-                                <img src="default.png" alt=""></img>
-                                <h4> Jean Noel Vittaut</h4>
-                                <date>02/02/2022</date>
-                                <p>hell yeah , how a man that stupid could be elected as the president of our land, that brainless noob did all useless thing possible in the world, his policies are only done by mouse nothing real was done , all that bastard want is
-                                    money he doesn't care how the pandemic is going and how his people are diying</p>
-                            </div>
-
+                            <div id="zonemessage">{this.state.messages}</div>
                             <div>
-                                <p>---------</p>
-
-                                <p>---------</p>
+                                <p>----------------------------------------------------------------</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         );
+
     }
 }
 

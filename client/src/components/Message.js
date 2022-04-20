@@ -8,7 +8,7 @@ class Message extends Component {
         this.state = {
             message: "",
             user: "",
-            date: "",
+            //date: "",
             id: ""
         }
     }
@@ -17,19 +17,21 @@ class Message extends Component {
         this.setState({
             message: this.props.message,
             user: this.props.user,
-            date: this.props.date,
+            //date: this.props.date,
             id: this.props.id
         })
     }
 
     render() {
         return (
-            <div className="message">
-                <p>{this.state.user}</p>
+            <div class="commentaire">
+                <h4>{this.state.user}</h4>
+                <date>02/02/2022</date>
                 <p>{this.state.message}</p>
-                <p>{this.state.date}</p>
             </div>
         )
     }
 
 }
+
+export default Message;

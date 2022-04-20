@@ -123,22 +123,25 @@ function init(db) {
                 res.status(500).send(e);
             }
         })
-        .delete((req, res, next) => res.send(`delete user ${req.params.user_id}`));
+        
 
 
 
     //logout
     router
-        .route("/user/:user_id/logout")
+        .route("/user/logout")
         .delete((req, res) => {
             req.session.destroy((err) => {
                 if (err) {
+                    console.log("regarde : ", err);
                     res.status(500).json({
+                        
                         status: 500,
                         message: "Erreur interne"
                     });
                 }
                 else {
+                    console.log("success");
                     res.status(200).json({
                         status: 200,
                         message: "Logout réussi"
@@ -160,6 +163,10 @@ function init(db) {
             res.status(200).body({ id: userid });
         }
     });
+
+
+
+    
 
     return router;
 }

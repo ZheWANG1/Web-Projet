@@ -17,12 +17,14 @@ const containerCSS = {
 };
 
 const api = axios.create({
+    withCredentials: true,
     baseURL: 'http://localhost:4000/api',
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
 })
 
 const apimessages = axios.create({
+    withCredentials: true,
     baseURL: 'http://localhost:4000/apimessages',
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
@@ -35,7 +37,13 @@ class Homepage extends Component {
     }
 
     onSubmit(event) {
-        //apimessages.post('/user' style={containerCSS}
+        apimessages.post('/message', {
+            message: document.getElementsByName('newtext')[0].value
+        }).then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
     render() {
@@ -52,17 +60,13 @@ class Homepage extends Component {
                     <div id="zoneright">
                         <div id="zoneNewC" >
                             <div>
-                                <textarea rows="5" cols="80" type="text"></textarea>
+                                <textarea rows="5" cols="80" type="text" name='newtext'></textarea>
                             </div>
 
-                        <div id="newC">
-                            <button type="button" class="btn" onClick={this.onSubmit}>Envoyer</button>
+                            <div id="newC">
+                                <button type="button" class="btn" onClick={this.onSubmit}>Envoyer</button>
+                            </div>
                         </div>
-                            
-
-                        </div>
-                        
-
                         <div id="zoneC">
                             <div class="commentaire">
                                 <img src="profil.jpeg" alt=""></img>

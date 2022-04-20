@@ -27,7 +27,7 @@ class NavigationPannel extends Component {
                 return (
                     <div>
                         <Link to="/profil">
-                            <button type="button" onClick={this.props.openProfil}>Profile</button>
+                            <button type="button" onClick={() => { this.props.openProfil() }}>Profile</button>
                         </Link>
                         <Link to="/Homepage">
                             <button type="button" onClick={() => { this.props.setLogout() }}>Log out</button>

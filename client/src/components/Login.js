@@ -20,7 +20,7 @@ class Login extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-
+        
         api.post('/user/login',
             {
                 login: event.target.login.value,
@@ -30,10 +30,12 @@ class Login extends Component {
                 console.log(res);
                 console.log(res.data);
                 this.props.setConnexionState("connected");
+                this.props.getUserInfo();
             })
             .catch(err => {
                 console.log(err);
             })
+        
     }
 
     render() {

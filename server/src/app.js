@@ -1,5 +1,7 @@
 const path = require('path');
 const api = require('./api.js');
+const apimessages = require('./apimessages.js');
+const apifriends  =require('./apifriends.js')
 const DataStore = require('nedb')
 const cors = require('cors')
 
@@ -38,7 +40,7 @@ app.use(session({
 }));
 
 app.use('/api', api.default(db));
-app.use('/apimessages', api.default(db));
+app.use('/apimessages', apimessages.default(db));
 app.use('/apifriends', api.default(db));
 
 // Démarre le serveur

@@ -166,6 +166,7 @@ h1 {
 .commentaire h4 {
   width: 50%;
   margin-left: 15%;
+  text-align: left;
 }
 
 .commentaire date {
@@ -179,7 +180,8 @@ h1 {
 .commentaire p {
   width: 80%;
   margin-left: 15%;
-  background-color: #fff;
+  color: #fff;
+  text-align: left;
 }
 
 #loginbox {
