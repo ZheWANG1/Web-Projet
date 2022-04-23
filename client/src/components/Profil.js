@@ -34,9 +34,13 @@ class Profil extends Component {
         })
 
         apimessages.get('/getSelfMessage').then(res => {
+            let tmp = []
             for (var i = 0; i < res.data.length; i++) {
-                this.state.messages.push(<Message message={res.data[i].message} user={res.data[i].login} id={res.data[i]._id}></Message>);
+                
+               tmp.push(<Message message={res.data[i].message} user={res.data[i].login} id={res.data[i]._id}></Message>);
+
             }
+            this.setState({messages: tmp})
         });
     }
 

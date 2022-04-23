@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Logout from './components/Logout';
@@ -31,6 +31,7 @@ function random(n) {
 
 }
 
+
 class App extends Component {
 
   constructor(props) {
@@ -51,6 +52,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.changeProfilePhotoRef = createRef();
+    
     api.get('/user/self').then(res => {
       console.log(res.data);
       if (res.data[0] != null) {
@@ -59,8 +62,8 @@ class App extends Component {
     })
   }
 
-  getUserInfo = () => {
-    api.get('/user/self').then(res => {
+  getUserInfo = async () => {
+      await api.get('/user/self').then(res => {
       this.setState({ connected: "connected", userinfo: res.data })
     })
   }

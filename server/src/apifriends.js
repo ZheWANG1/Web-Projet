@@ -1,6 +1,6 @@
 const express = require("express");
 const Users = require("./entities/users.js");
-
+const Friends = require("./entities/friends.js");
 function init(db) {
     const router = express.Router();
     // On utilise JSON
@@ -13,6 +13,7 @@ function init(db) {
         next();
     });
     const users = new Users.default(db);
+    const friends = new Friends.default(db);
 
 
 

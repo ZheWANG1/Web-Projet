@@ -41,7 +41,7 @@ app.use(session({
 
 app.use('/api', api.default(db));
 app.use('/apimessages', apimessages.default(db));
-app.use('/apifriends', api.default(db));
+app.use('/apifriends', apifriends.default(db));
 
 // Démarre le serveur
 app.on('close', () => {

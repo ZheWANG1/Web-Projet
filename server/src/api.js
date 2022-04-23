@@ -150,20 +150,44 @@ function init(db) {
             });
         });
 
+    
+   
+    
+    //follow
+    router.post("/user/follow" , async (req , res) => {
+        try {
+            const{mylogin , followinglogin } = req.body;
+            await users.follow(mylogin ,followinglogin);
 
-    router.post("user/create", (req, res) => {
-        const { login, password, lastname, firstname } = req.body
-        const { log } = db.users.find({ login: login }, { login: 1 })
-        if (log == login) {
-            res.status(301).json({
-                status: 301,
-                message: "compte existant"
-            });
-
-            res.status(200).body({ id: userid });
+        }catch( e) {
+            res.send(500).json({message : "internal server error , unknown"})
         }
-    });
+    })
+    //follow 
+    router.post("/user/self/follow" , async (req , res) => {
+        try {
+            console.log("username : " , req.session.username);
+            console.log("body : " , req.body);
+            if(!req.session){
+                res.status(501).send("login problem");
+            }
+            const {Flogin} = req.body;
+            if(!Flogin ){
+                res.status(502).send("missing body");
+            }else{
+                console.log(Flogin)
+            
+                await users.follow(req.session.username ,Flogin);
 
+
+            }
+            
+
+        }catch(e) {
+            res.status(500).send("internal server error , unknown")
+        }
+    })
+    
 
 
     

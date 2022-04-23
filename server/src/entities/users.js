@@ -1,13 +1,17 @@
+const e = require("express");
+const { resolve } = require("path/posix");
+
 class Users {
   constructor(db) {
     this.db = db
 
     // suite plus tard avec la BD
+    this.get = this.get.bind(this);
   }
 
   create(login, password, lastname, firstname) {
     return new Promise((resolve, reject) => {
-      this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname }, function (err, docs) {
+      this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname , following : [] , followers : []}, function (err, docs) {
         let userid = docs._id
         if (!userid) {
           //erreur
@@ -46,12 +50,15 @@ class Users {
 
   async exists(login) {
     return new Promise((resolve, reject) => {
-      if (false) {
-        //erreur
-        reject();
-      } else {
-        resolve(true);
-      }
+      this.db.users.find({login : login}, function(err, docs){
+         
+        if( !docs ){
+          reject();
+        }else{
+          resolve(true)
+        }
+      })
+     
     });
   }
 
@@ -76,6 +83,22 @@ class Users {
       //   resolve(userid);
       // }
     });
+  }
+
+  async follow(mylogin , followinglogin) { 
+    
+    return new Promise ( (resolve , reject ) =>{
+      
+       this.db.update({login : mylogin }, {$push : {following : followinglogin}} , {} ,  function(){
+
+          
+
+        this.db.update({login : followinglogin} , { $push : { followers : mylogin}} , {} , function (err , numresolve){})
+
+
+      });
+    });
+    
   }
 
 }

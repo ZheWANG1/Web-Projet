@@ -21,7 +21,7 @@ class Login extends Component {
     onSubmit(event) {
         event.preventDefault();
         
-        api.post('/user/login',
+         api.post('/user/login',
             {
                 login: event.target.login.value,
                 password: event.target.password.value
