@@ -11,6 +11,9 @@ class Users {
 
   create(login, password, lastname, firstname) {
     return new Promise((resolve, reject) => {
+
+      
+
       this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname, following: [], followers: [] }, function (err, docs) {
         let userid = docs._id
         if (!userid) {

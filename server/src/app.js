@@ -14,9 +14,10 @@ const app = express()
 api_1 = require("./api.js");
 const session = require("express-session");
 const db = {};
-db.users = new DataStore({filename : "./userData.db"});
+db.users = new DataStore({filename : "./userData.json"});
 db.messages = new DataStore({filename : "./messageData.json"});
 db.friends = new DataStore({filename : "./friendData.json"});
+
 
 db.users.loadDatabase();
 db.messages.loadDatabase();

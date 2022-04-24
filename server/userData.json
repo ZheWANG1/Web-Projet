@@ -1,0 +1,3 @@
+{"login":"user2","password":"u123456","lastname":"last","firstname":"first","following":[],"followers":["u","u"],"_id":"kNyed5TxUjdTGNxV"}
+{"login":"u","password":"1","lastname":"last","firstname":"first","following":["user2","user2"],"followers":[],"_id":"lUU2jSYA0yrE6W3d"}
+

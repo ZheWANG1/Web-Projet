@@ -178,7 +178,7 @@ function init(db) {
                 console.log(Flogin)
             
                 users.follow(req.session.username ,Flogin);
-                
+
 
             }
             
