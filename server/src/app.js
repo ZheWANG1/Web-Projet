@@ -18,7 +18,7 @@ db.users = new DataStore({filename : "./userData.json"});
 db.messages = new DataStore({filename : "./messageData.json"});
 db.friends = new DataStore({filename : "./friendData.json"});
 
-
+db.users.persistence.setAutocompactionInterval('5000')
 db.users.loadDatabase();
 db.messages.loadDatabase();
 db.friends.loadDatabase();

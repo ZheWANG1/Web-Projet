@@ -176,10 +176,8 @@ function init(db) {
                 res.status(502).send("missing body");
             }else{
                 console.log(Flogin)
-            
-                users.follow(req.session.username ,Flogin);
-
-
+                await users.follow(req.session.username , Flogin);
+                res.status(200).send("followed");
             }
             
 

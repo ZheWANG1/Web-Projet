@@ -12,7 +12,7 @@ class Users {
   create(login, password, lastname, firstname) {
     return new Promise((resolve, reject) => {
 
-      
+
 
       this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname, following: [], followers: [] }, function (err, docs) {
         let userid = docs._id
@@ -89,12 +89,18 @@ class Users {
   }
 
   follow(mylogin, followinglogin) {
-
     return new Promise((resolve, reject) => {
-      this.db.users.update({ login: mylogin }, { $push: { following: followinglogin } }, {upsert : true}, function () {});
-      this.db.users.update({ login: followinglogin }, { $push: { followers: mylogin } }, {upsert : true}, function () {});
+      this.db.users.update({ login: mylogin }, { $push: { following: followinglogin } }, function (err, docs) {
+        if (err) {
+          reject();
+        }
+      })
+      this.db.users.update({ login: followinglogin }, { $push: { followers: mylogin } }, function (err, docs) {
+        if (err) {
+          reject();
+        }
+      })
       resolve();
-
     });
 
   }
