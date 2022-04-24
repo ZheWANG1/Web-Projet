@@ -177,13 +177,14 @@ function init(db) {
             }else{
                 console.log(Flogin)
             
-                await users.follow(req.session.username ,Flogin);
-
+                users.follow(req.session.username ,Flogin);
+                
 
             }
             
 
         }catch(e) {
+            console.log(e)
             res.status(500).send("internal server error , unknown")
         }
     })

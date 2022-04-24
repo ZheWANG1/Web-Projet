@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import NavigationPannel from './NavigationPannel';
-import logo from './logo512.png';
+import Message from './Message';
 import axios from 'axios';
 
 const containerCSS = {
@@ -34,6 +34,18 @@ class Homepage extends Component {
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this)
+        this.state = {
+            messages: []
+        }
+
+        // apimessages.get('/allmessage').then(res => {
+        //     let tmp = []
+        //     for (var i = 0; i < res.data.length; i++) {
+        //         tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} id={res.data.allmess[i]._id}></Message>);
+        //     }
+        //     this.state.messages = tmp;
+            
+        // });
     }
 
     onSubmit(event) {
@@ -41,11 +53,23 @@ class Homepage extends Component {
             message: document.getElementsByName('newtext')[0].value
         }).then(res => {
             console.log(res.data);
+
         }).catch(err => {
             console.log(err);
         })
     }
 
+
+    componentDidMount() {
+        apimessages.get('/allmessage').then(res => {
+            let tmp = []
+            for (var i = 0; i < res.data.allmess.length; i++) {
+                tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} id={res.data.allmess[i]._id}></Message>);
+            }
+            console.log("tous message " , res.data.allmess[0].message);
+            this.setState({ messages: tmp })
+        })
+      }
     render() {
         return (
             <div>
@@ -68,20 +92,7 @@ class Homepage extends Component {
                             </div>
                         </div>
                         <div id="zoneC">
-                            <div class="commentaire">
-                                <img src="profil.jpeg" alt=""></img>
-                                <h4> Promethee Spathis</h4>
-                                <date>02/02/2022</date>
-                                <p>macron is totally stupid</p>
-                            </div>
-
-                            <div class="commentaire">
-                                <img src="default.png" alt=""></img>
-                                <h4> Jean Noel Vittaut</h4>
-                                <date>02/02/2022</date>
-                                <p>hell yeah , how a man that stupid could be elected as the president of our land, that brainless noob did all useless thing possible in the world, his policies are only done by mouse nothing real was done , all that bastard want is
-                                    money he doesn't care how the pandemic is going and how his people are diying</p>
-                            </div>
+                            <div id="zonemessage">{this.state.messages}</div>
                         </div>
                     </div>
                 </div>

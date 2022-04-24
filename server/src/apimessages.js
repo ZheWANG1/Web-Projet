@@ -60,7 +60,7 @@ function init(db) {
     //avoir ses propre message
     router.get("/getSelfMessage", async (req, res) => {
         //const { login } = req.params.login;
-        if (! req.session.username) {
+        if (!req.session.username) {
             res.status(400).send("login problem")
         } else if (! await users.exists(req.session.username)) {
             res.status(402).send("Utilisateur inconnue")
@@ -97,21 +97,28 @@ function init(db) {
         }
     })
 
-    router.get("/allmessage" , async(req, res) => {
-        try{
-            res.status(200).send({message: await messages.getAllMessage()})
-        }catch(e) {
+    router.get("/allmessage", async (req, res) => {
+        try {
+            allmess = await messages.getAllMessage();
+
+            if (!allmess) {
+                res.sendStatus(400)
+            } else {
+                res.send({ allmess })
+            }
+
+        } catch (e) {
             console.log(e);
             res.status(500).send({ status: 500, message: "internal server error" });
 
         }
     })
 
-    router.get("/findmessage" , async(req, res) => {
+    router.get("/findmessage", async (req, res) => {
         let content = req.body
-        try{
+        try {
             res.status(200).send(await messages.findMessage(content))
-        }catch(e){
+        } catch (e) {
             console.log(e)
             res.status(500).send({ status: 500, message: "internal server error" });
         }

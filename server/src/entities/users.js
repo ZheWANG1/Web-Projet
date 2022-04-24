@@ -11,7 +11,7 @@ class Users {
 
   create(login, password, lastname, firstname) {
     return new Promise((resolve, reject) => {
-      this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname , following : [] , followers : []}, function (err, docs) {
+      this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname, following: [], followers: [] }, function (err, docs) {
         let userid = docs._id
         if (!userid) {
           //erreur
@@ -32,7 +32,7 @@ class Users {
       //    firstname: "pika"
       // }; // À remplacer par une requête bd
 
-      this.db.users.find({ login: username },function (err, docs) {
+      this.db.users.find({ login: username }, function (err, docs) {
         let res_user = docs
         if (!res_user) {
           reject()
@@ -46,19 +46,19 @@ class Users {
     });
   }
 
-  
+
 
   async exists(login) {
     return new Promise((resolve, reject) => {
-      this.db.users.find({login : login}, function(err, docs){
-         
-        if( !docs ){
+      this.db.users.find({ login: login }, function (err, docs) {
+
+        if (!docs) {
           reject();
-        }else{
+        } else {
           resolve(true)
         }
       })
-     
+
     });
   }
 
@@ -85,20 +85,15 @@ class Users {
     });
   }
 
-  async follow(mylogin , followinglogin) { 
-    
-    return new Promise ( (resolve , reject ) =>{
-      
-       this.db.update({login : mylogin }, {$push : {following : followinglogin}} , {} ,  function(){
+  follow(mylogin, followinglogin) {
 
-          
+    return new Promise((resolve, reject) => {
+      this.db.users.update({ login: mylogin }, { $push: { following: followinglogin } }, {upsert : true}, function () {});
+      this.db.users.update({ login: followinglogin }, { $push: { followers: mylogin } }, {upsert : true}, function () {});
+      resolve();
 
-        this.db.update({login : followinglogin} , { $push : { followers : mylogin}} , {} , function (err , numresolve){})
-
-
-      });
     });
-    
+
   }
 
 }
