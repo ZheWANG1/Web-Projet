@@ -26,7 +26,7 @@ class Users {
     });
   }
   //get
-  get(username) {
+  async get(username) {
     return new Promise((resolve, reject) => {
       // const user = {
       //    login: "pikachu",
@@ -54,11 +54,15 @@ class Users {
   async exists(login) {
     return new Promise((resolve, reject) => {
       this.db.users.find({ login: login }, function (err, docs) {
-
         if (!docs) {
           reject();
         } else {
-          resolve(true)
+          if (docs.length == 0) {
+            resolve(false);
+          }
+          else {
+            resolve(true);
+          }
         }
       })
 
@@ -68,13 +72,19 @@ class Users {
   checkpassword(login, password) {
     return new Promise((resolve, reject) => {
       this.db.users.find({ login: login, password: password }, function (err, docs) {
-        let username = docs[0].login;
-        if (err) {
-          reject();
+        if (!docs[0]) {
+          //console.log("Username or password error");
+          reject("Username or password error")
+        } else {
+          let username = docs[0].login;
+          if (err) {
+            reject();
+          }
+          else {
+            resolve(username);
+          }
         }
-        else {
-          resolve(username);
-        }
+
       })
 
 

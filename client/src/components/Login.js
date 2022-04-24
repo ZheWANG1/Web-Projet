@@ -13,15 +13,13 @@ const api = axios.create({
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.loginname = null;
-        this.password = null
-        this.onSubmit = this.onSubmit.bind(this)
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onSubmit(event) {
         event.preventDefault();
-        
-         api.post('/user/login',
+
+        api.post('/user/login',
             {
                 login: event.target.login.value,
                 password: event.target.password.value
@@ -33,9 +31,10 @@ class Login extends Component {
                 this.props.getUserInfo();
             })
             .catch(err => {
+                alert(err.response.data.message);
                 console.log(err);
             })
-        
+
     }
 
     render() {

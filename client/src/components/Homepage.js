@@ -4,18 +4,6 @@ import NavigationPannel from './NavigationPannel';
 import Message from './Message';
 import axios from 'axios';
 
-const containerCSS = {
-
-    width: "60px",
-    height: "60px",
-
-    backgroundColor: "#0d6efd",
-    color: "#FFF",
-    borderRadius: "50px",
-    textAlign: "center",
-    boxShadow: "2px,2px, 3px, #000",
-};
-
 const api = axios.create({
     withCredentials: true,
     baseURL: 'http://localhost:4000/api',
@@ -44,7 +32,7 @@ class Homepage extends Component {
         //         tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} id={res.data.allmess[i]._id}></Message>);
         //     }
         //     this.state.messages = tmp;
-            
+
         // });
     }
 
@@ -53,7 +41,7 @@ class Homepage extends Component {
             message: document.getElementsByName('newtext')[0].value
         }).then(res => {
             console.log(res.data);
-
+            window.location.reload();
         }).catch(err => {
             console.log(err);
         })
@@ -64,12 +52,12 @@ class Homepage extends Component {
         apimessages.get('/allmessage').then(res => {
             let tmp = []
             for (var i = 0; i < res.data.allmess.length; i++) {
-                tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} id={res.data.allmess[i]._id}></Message>);
+                tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} date={res.data.allmess[i].date} id={res.data.allmess[i]._id}></Message>);
             }
-            console.log("tous message " , res.data.allmess[0].message);
+            console.log("tous message ", res.data.allmess[0].message);
             this.setState({ messages: tmp })
         })
-      }
+    }
     render() {
         return (
             <div>
@@ -88,7 +76,7 @@ class Homepage extends Component {
                             </div>
 
                             <div id="newC">
-                                <button type="button" class="btn" onClick={this.onSubmit}>Envoyer</button>
+                                <button type="button" classname="btn" onClick={this.onSubmit}>Envoyer</button>
                             </div>
                         </div>
                         <div id="zoneC">

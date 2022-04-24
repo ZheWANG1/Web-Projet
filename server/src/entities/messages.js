@@ -1,14 +1,13 @@
-class Message{
-    constructor(db){
+class Message {
+    constructor(db) {
         this.db = db;
     }
 
-    async create(message, login){
+    async create(message, login) {
         return new Promise((resolve, reject) => {
-            this.db.messages.insert({ message: message, login: login }, function (err, docs) {
+            this.db.messages.insert({ message: message, login: login, date: Date.now() }, function (err, docs) {
                 let messageid = docs._id
                 if (!messageid) {
-                    //erreur
                     reject();
                 } else {
                     resolve(messageid);
@@ -17,51 +16,54 @@ class Message{
         });
     }
 
-    async delete(messageid){
+    delete(messageid) {
         return new Promise((resolve, reject) => {
-            this.db.messages.remove({ _id: messageid }, function (err, docs) {
+            this.db.messages.remove({ _id: messageid }, function (err, numRemoved) {
                 if (err) {
                     reject();
                 }
                 else {
-                    resolve(docs);
+                    resolve(numRemoved);
                 }
             })
         });
     }
-    async getUserMessage(username){ 
-        return new Promise((resolve  , reject) => {
-            this.db.messages.find({login : username} , function(err,docs){
+    async getUserMessage(username) {
+        return new Promise((resolve, reject) => {
+            this.db.messages.find({ login: username }, function (err, docs) {
                 let mess = docs
-                if (!mess){
+                if (!mess) {
                     reject();
-                }else {
+                } else {
                     resolve(mess);
                 }
             })
         })
     }
 
-    async getAllMessage(){ 
-        return new Promise((resolve  , reject) => {
-            this.db.messages.find({} , function(err,docs){
+    async getAllMessage() {
+        return new Promise((resolve, reject) => {
+            this.db.messages.find({}).sort({ date: -1 }).exec(function (err, docs) {
                 let mess = docs
-                if (!mess){
+                if (!mess) {
                     reject();
-                }else {
+                } else {
                     resolve(mess);
                 }
             })
         })
+
     }
 
-    async findMessage(content){
-        return new Promise((resolve  , reject) => {
-            this.db.messages.find({message : /content/ } , function(err,docs){
+
+
+    async findMessage(content) {
+        return new Promise((resolve, reject) => {
+            this.db.messages.find({ message: /content/ }, function (err, docs) {
                 let message = docs
-                if (!message){
+                if (!message) {
                     reject();
-                }else {
+                } else {
                     resolve(messsage);
                 }
             })
@@ -70,7 +72,7 @@ class Message{
 
 
 
-    
+
 }
 
 exports.default = Message;

@@ -4,6 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import axios from 'axios';
 
 const api = axios.create({
+    withCredentials: true,
     baseURL: 'http://localhost:4000/api',
     timeout: 1000,
     headers: { 'Content-Type': 'application/json' }
@@ -17,22 +18,40 @@ class Signup extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        this.props.setConnexionState("connected");
+        //this.props.setConnexionState("connected");
         api.post('/user',
             {
                 login: event.target.login.value,
                 password: event.target.password.value,
                 lastname: event.target.nom.value,
                 firstname: event.target.prenom.value
-
                 // confirmpassword: event.target.confirmpassword.value
             })
             .then(res => {
                 console.log(res)
                 console.log(res.data)
+                api.post('/user/login',
+                    {
+                        login: event.target.login.value,
+                        password: event.target.password.value
+                    })
+                    .then(res => {
+                        console.log(res);
+                        console.log(res.data);
+                        console.log(this.props.connected);
+                        this.props.setConnexionState("connected");
+                        this.props.getUserInfo();
+
+                    })
+                    .catch(err => {
+                        this.props.setConnexionState("notconnected");
+                        alert(err.response.data.message);
+                        console.log(err);
+                    })
             })
             .catch(err => {
                 console.log(err)
+                alert(err.response.data.message);
             })
     }
 
@@ -54,6 +73,7 @@ class Signup extends Component {
                     <Link to="/">
                         <button type="button" onClick={() => this.props.setHomepage()} id="annuler" class="btn">Annuler</button>
                     </Link>
+
                 </form>
 
             </div>

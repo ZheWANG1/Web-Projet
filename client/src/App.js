@@ -52,8 +52,9 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     this.changeProfilePhotoRef = createRef();
-    
+
     api.get('/user/self').then(res => {
       console.log(res.data);
       if (res.data[0] != null) {
@@ -63,7 +64,7 @@ class App extends Component {
   }
 
   getUserInfo = async () => {
-      await api.get('/user/self').then(res => {
+    await api.get('/user/self').then(res => {
       this.setState({ connected: "connected", userinfo: res.data })
     })
   }
@@ -110,7 +111,7 @@ class App extends Component {
       }
 
       if (this.state.user == "signup") {
-        return <Signup setHomepage={this.setHomepage} setConnexionState={this.setConnexionState}></Signup>
+        return <Signup userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setHomepage={this.setHomepage} setConnexionState={this.setConnexionState}></Signup>
       }
 
       if (this.state.user == "profil") {
@@ -120,7 +121,7 @@ class App extends Component {
   }
 
   render() {
-    
+
     return (
       <div className="MainPage">
         <Routes>
@@ -128,7 +129,7 @@ class App extends Component {
           </Route>
           <Route path="/login" element={<Login userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setHomepage={this.setHomepage} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
-          <Route path="/signup" element={<Signup setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
+          <Route path="/signup" element={<Signup userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
           <Route path="/homepage" element={<Homepage openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
           </Route>

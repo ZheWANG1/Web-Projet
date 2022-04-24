@@ -53,8 +53,6 @@ function init(db) {
                 console.log(e);
                 res.status(500).send(e)
             }
-
-
         }
     });
     //avoir ses propre message
@@ -121,6 +119,24 @@ function init(db) {
         } catch (e) {
             console.log(e)
             res.status(500).send({ status: 500, message: "internal server error" });
+        }
+
+    })
+
+
+    router.delete("/deleteMessage", async (req, res) => {
+        try {
+
+
+            const { mess_id } = req.body;
+            if (!mess_id) {
+                res.status(505).send("message doesn't exist");
+            } else {
+                let num = await messages.delete(mess_id);
+                res.status(200).send(num, "message deleted");
+            }
+        } catch (e) {
+            res.status(500).send(err, " internal server error");
         }
 
     })

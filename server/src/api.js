@@ -15,14 +15,23 @@ function init(db) {
     const users = new Users.default(db);
 
     // createUser
-    router.post("/user", (req, res) => {
+    router.post("/user", async(req, res) => {
         const { login, password, lastname, firstname } = req.body;
         if (!login || !password || !lastname || !firstname) {
             res.status(400).send("Missing fields");
         } else {
-            users.create(login, password, lastname, firstname)
-                .then((user_id) => res.status(201).send({ id: user_id }))
-                .catch((err) => res.status(500).send(err));
+            let check = await users.exists(login)
+            console.log("check : " , check)
+            if(check) {
+                res.status(401).json({
+                    status : 401,
+                    message : "login existant, veuillez changer de login"
+                });
+            }else {
+                users.create(login, password, lastname, firstname)
+                    .then((user_id) => res.status(201).send({ id: user_id }))
+                    .catch((err) => res.status(500).send(err));
+            }       
         }
 
     });
@@ -46,8 +55,9 @@ function init(db) {
                 });
                 return;
             }
-            let username = await users.checkpassword(login, password);
-            
+            let username = await users.checkpassword(login, password)
+
+            //console.log("username",username)
             if (username) {
                 // Avec middleware express-session
                 req.session.regenerate(function (err) {
@@ -80,9 +90,11 @@ function init(db) {
         }
         catch (e) {
             // Toute autre erreur
+            console.log(e)
+            
             res.status(500).json({
                 status: 500,
-                message: "erreur interne",
+                message: e,
                 details: (e || "Erreur inconnue").toString()
             });
         }
@@ -175,6 +187,7 @@ function init(db) {
             if(!Flogin ){
                 res.status(502).send("missing body");
             }else{
+                const tmp = await users.get(req.session.username)
                 console.log(Flogin)
                 await users.follow(req.session.username , Flogin);
                 res.status(200).send("followed");
