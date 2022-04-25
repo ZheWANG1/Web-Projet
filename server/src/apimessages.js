@@ -111,9 +111,11 @@ function init(db) {
 
         }
     })
-
+    //find message with content
     router.get("/findmessage", async (req, res) => {
-        let content = req.body
+        let {content} = req.body
+        console.log(req.body)
+        console.log(content);
         try {
             res.status(200).send(await messages.findMessage(content))
         } catch (e) {

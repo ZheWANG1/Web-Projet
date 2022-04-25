@@ -59,12 +59,12 @@ class Message {
 
     async findMessage(content) {
         return new Promise((resolve, reject) => {
-            this.db.messages.find({ message: /content/ }, function (err, docs) {
-                let message = docs
-                if (!message) {
+            this.db.messages.find({ message: new RegExp(content) }, function (err, docs) {
+                
+                if (!docs) {
                     reject();
                 } else {
-                    resolve(messsage);
+                    resolve(docs);
                 }
             })
         })

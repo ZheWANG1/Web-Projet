@@ -122,10 +122,15 @@ function init(db) {
 
     //getUser
     router
-        .route("/user/:login")
+        .route("/user/getUser/") //.route("/user/getUser/:login)
         .get(async (req, res) => {
             try {
-                const user = await users.get(req.params.login);
+                console.log("params",req.params);
+                console.log("query" , req.query);
+                console.log("body" , req.body)
+                //const user = await users.get(req.params.login)
+                const user = await users.get(req.query.login);
+                console.log("user :" , user);
                 if (!user)
                     res.sendStatus(404);
                 else

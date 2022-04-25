@@ -2,6 +2,21 @@ import React, { Component } from 'react';
 import '../App.css';
 import logo from './logo512.png';
 import { Link } from "react-router-dom";
+import axios from 'axios';
+//import api from '../../../server/src/api';
+const api = axios.create({
+    withCredentials: true,
+    baseURL: 'http://localhost:4000/api',
+    timeout: 1000,
+    headers: { 'Content-Type': 'application/json' }
+})
+
+const apimessages = axios.create({
+    withCredentials: true,
+    baseURL: 'http://localhost:4000/apimessages',
+    timeout: 1000,
+    headers: { 'Content-Type': 'application/json' }
+})
 
 class NavigationPannel extends Component {
 
@@ -37,6 +52,41 @@ class NavigationPannel extends Component {
             }
         }
     }
+    onSubmit(event){
+        event.preventDefault();
+        console.log(event.target.user.checked);
+        console.log(event.target.message.checked);
+        console.log("bar content" ,event.target.rbar.value)
+        if(event.target.user.checked){
+            api.get('/user/getUser' , {
+                params : {
+                    login : event.target.rbar.value
+                }
+                
+                
+            })
+
+            //api.get(`/user/getUser/:${event.target.rbar.value}`)
+            .then(res=>{
+                if(res.data =[]){
+                    alert("no such user check your spelling")
+                }else{
+                    console.log(res.data)
+                }
+                
+            })
+            
+
+        }else if(event.target.message.checked){
+            apimessages.get('/findmessage' , {
+                content : event.target.rbar.value
+            }).then(res=>{
+                console.log(res.data)
+            })
+        }else{
+            alert("check a check box to make a research")
+        }
+    }
 
     render() {
         return (
@@ -48,12 +98,12 @@ class NavigationPannel extends Component {
                         </Link>
                     </div>
                     <div id="search">
-                        <form action="">
+                        <form onSubmit={this.onSubmit} method='POST'>
                             <input type="text" id="rbar"></input>
                             <button type="submit" id="rbutton">Search</button>
                             <div>
-                                <label><input type="checkbox"></input>c1</label>
-                                <label><input type="checkbox"></input>c2</label>
+                                <label><input type="checkbox" id='user' name='user'></input>user</label>
+                                <label><input type="checkbox" id='message' name='message'></input>message</label>
                                 <label><input type="checkbox"></input>c3</label>
                                 <label><input type="checkbox"></input>c4</label>
                                 <label><input type="checkbox"></input>c5</label>
