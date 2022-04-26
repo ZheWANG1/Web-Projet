@@ -1,3 +1,4 @@
+const { query } = require("express");
 const express = require("express");
 const Users = require("./entities/users.js");
 
@@ -118,6 +119,21 @@ function init(db) {
 
         }
     
+    })
+
+    //findUser
+    router.get("/findUser", async (req, res) => {
+        console.log(req.query)
+        let {content} = req.query
+        console.log(req.body)
+        console.log(content);
+        try {
+            res.status(200).send(await users.findUser(content))
+        } catch (e) {
+            console.log(e)
+            res.status(500).send({ status: 500, message: "internal server error" });
+        }
+
     })
 
     //getUser

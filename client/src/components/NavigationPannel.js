@@ -58,9 +58,9 @@ class NavigationPannel extends Component {
         console.log(event.target.message.checked);
         console.log("bar content" ,event.target.rbar.value)
         if(event.target.user.checked){
-            api.get('/user/getUser' , {
+            api.get('/findUser' , {
                 params : {
-                    login : event.target.rbar.value
+                    content : event.target.rbar.value
                 }
                 
                 
@@ -68,7 +68,8 @@ class NavigationPannel extends Component {
 
             //api.get(`/user/getUser/:${event.target.rbar.value}`)
             .then(res=>{
-                if(res.data =[]){
+                //console.log(res.data)
+                if(res.data ===[]){
                     alert("no such user check your spelling")
                 }else{
                     console.log(res.data)
@@ -79,7 +80,12 @@ class NavigationPannel extends Component {
 
         }else if(event.target.message.checked){
             apimessages.get('/findmessage' , {
-                content : event.target.rbar.value
+                
+                    params :{
+                        content : event.target.rbar.value
+                    }
+                
+                
             }).then(res=>{
                 console.log(res.data)
             })

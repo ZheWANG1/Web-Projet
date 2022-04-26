@@ -67,7 +67,22 @@ class Users {
       })
 
     });
+
   }
+
+  async findUser(content) {
+    return new Promise((resolve, reject) => {
+        //console.log(content)
+        this.db.users.find({ login: new RegExp(content) }, function (err, docs) {
+            console.log(docs)
+            if (!docs) {
+                reject();
+            } else {
+                resolve(docs);
+            }
+        })
+    })
+}
 
   checkpassword(login, password) {
     return new Promise((resolve, reject) => {
@@ -114,6 +129,9 @@ class Users {
     });
 
   }
+
+
+  
 
 }
 

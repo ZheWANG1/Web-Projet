@@ -113,7 +113,7 @@ function init(db) {
     })
     //find message with content
     router.get("/findmessage", async (req, res) => {
-        let {content} = req.body
+        let {content} = req.query
         console.log(req.body)
         console.log(content);
         try {
