@@ -1,9 +1,18 @@
 {"message":"5","login":"user1","date":1650818582703,"_id":"3pZDb7nFxg31Vxp0"}
-{"message":"try\n","login":"u1","date":1650841729085,"_id":"OgLdxTnrtX8HAXls"}
 {"message":"test","login":"u1","date":1650841723678,"_id":"P6kn1BRfsABVaUCI"}
 {"message":"43","login":"u1","date":1650818597460,"_id":"PemI9zD9DBk8XTJX"}
 {"message":"123\n","login":"u1","date":1650818595038,"_id":"WEzG9Le5Sdy6qdTJ"}
 {"message":"4","login":"user1","date":1650818580150,"_id":"WffQ67QaBkxk2iIh"}
 {"message":"123","login":"u1","date":1650818139003,"_id":"a4C2IArYFQB9xUYp"}
 {"message":"6","login":"user1","date":1650818584499,"_id":"g7XeOq6aNGjPdoZB"}
-{"message":"123","login":"u1","date":1650818293160,"_id":"ummI5gyo0oy9FQ9W"}
+{"$$deleted":true,"_id":"a4C2IArYFQB9xUYp"}
+{"$$deleted":true,"_id":"WEzG9Le5Sdy6qdTJ"}
+{"$$deleted":true,"_id":"PemI9zD9DBk8XTJX"}
+{"$$deleted":true,"_id":"P6kn1BRfsABVaUCI"}
+{"$$deleted":true,"_id":"g7XeOq6aNGjPdoZB"}
+{"$$deleted":true,"_id":"WffQ67QaBkxk2iIh"}
+{"message":"123","login":"u1","date":1651072449357,"_id":"p3Kcpvjdcp5Tm6B7"}
+{"$$deleted":true,"_id":"p3Kcpvjdcp5Tm6B7"}
+{"message":"123","login":"u1","date":1651072544333,"_id":"BGV1VDQWi26uhtcS"}
+{"message":"1","login":"u1","date":1651072546050,"_id":"4n6MoKGlp4LzgBR9"}
+{"message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras laoreet mattis neque, vitae porta ligula semper ac. Suspendisse potenti. In vitae congue felis, venenatis eleifend ipsum. Nam at sapien sed quam semper tempor a et orci. In ullamcorper, enim ac bibendum venenatis, massa diam aliquam eros, vitae gravida odio odio sit amet mi. Maecenas enim sapien, dictum rutrum sem eget, iaculis iaculis elit. Nam mi sem, convallis at dictum in, auctor mollis quam. In sodales sapien ut eros congue vehicula. In elementum, purus ut dapibus venenatis, tellus ante vestibulum nulla, quis cursus urna nisi non ligula. In porttitor sed mauris et feugiat. Maecenas non aliquet arcu, non congue ante. Quisque pellentesque faucibus enim, id luctus lectus consequat eu.","login":"u1","date":1651073335513,"_id":"Z8js5fADCQEilXKW"}

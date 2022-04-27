@@ -103,7 +103,7 @@ h1 {
 
 #zoneNewC {
   background-color: #303030;
-
+  margin-left: 20px;
   width: 60%;
   min-height: 80px;
   padding: 20px;
@@ -165,21 +165,23 @@ h1 {
 
 .commentaire h4 {
   width: 50%;
-  margin-left: 15%;
+  margin-left: 5%;
   text-align: left;
+  margin-top: 0px;
 }
 
 .commentaire date {
   width: 20%;
   float: right;
   font-style: italic;
-  position: relative;
-  top: -40px;
+  font-size: 12px;
+  margin-right: -30px;
+  width: 100px;
 }
 
 .commentaire p {
   width: 80%;
-  margin-left: 15%;
+  margin-left: 5%;
   color: #fff;
   text-align: left;
 }
@@ -214,6 +216,15 @@ h1 {
 
 .btn {
   margin-top: 10px;
+}
+
+#deletebutton {
+  float: right;
+  margin-top: -45px;
+}
+
+#username {
+  font-size: 18px;
 }
 
 

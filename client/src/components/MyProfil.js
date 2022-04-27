@@ -3,7 +3,6 @@ import '../App.css';
 import NavigationPannel from './NavigationPannel';
 import Message from './Message';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
 
 const api = axios.create({
     withCredentials: true,
@@ -19,9 +18,11 @@ const apimessages = axios.create({
     headers: { 'Content-Type': 'application/json' }
 })
 
-class Profil extends Component {
+class MyProfil extends Component {
     constructor(props) {
         super(props);
+
+        //console.log(this.props.openProfil);
 
         this.friendList = [1, 2, 4, 5];
         this.state = {
@@ -36,6 +37,7 @@ class Profil extends Component {
             this.state.userinfo = res.data;
         })
 
+        console.log("content : ", this.state.content)
         api.get('/user/getUser', {
 
             params: {
@@ -43,25 +45,29 @@ class Profil extends Component {
                 login: this.state.content
             }
         }).then(res => {
+            console.log("content : ", this.state.content)
             this.state.profil = res.data
 
-
             if (this.state.content === "" || this.state.profil === [] || this.state.profil[0].login === this.state.userinfo[0].login) {
+                console.log("on est sur notre profil")
                 this.state.profil = this.state.userinfo
+                console.log("profil : ", this.state.profil)
+                console.log("self : ", this.state.userinfo)
             }
-            console.log("profil : ", this.state.profil);
-            apimessages.get(`${this.state.profil[0].login}/getUserMessage`).then(res => {
-                let tmp = []
-                for (var i = 0; i < res.data.length; i++) {
 
-                    tmp.push(<Message message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
-
-                }
-                this.setState({ messages: tmp })
-            })
         })
-    }
 
+
+        apimessages.get('/getSelfMessage').then(res => {
+            let tmp = []
+            for (var i = 0; i < res.data.length; i++) {
+
+                tmp.push(<Message delete={1} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
+
+            }
+            this.setState({ messages: tmp })
+        });
+    }
 
     listItems() {
         var items = [];
@@ -74,7 +80,6 @@ class Profil extends Component {
     render() {
         return (
             <div>
-                {this.props.connected == "notconnected" && <Navigate to="/login"></Navigate>}
                 <NavigationPannel getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
@@ -85,6 +90,7 @@ class Profil extends Component {
 
                         </div>
                         <p>following {this.state.userinfo[0].following.length}</p>
+                        <p>followers {this.state.userinfo[0].followers.length}</p>
                         <ul>
                             {this.listItems()}
                         </ul>
@@ -104,4 +110,4 @@ class Profil extends Component {
 
     }
 }
-export default Profil;
+export default MyProfil;

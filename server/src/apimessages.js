@@ -36,7 +36,8 @@ function init(db) {
 
     //get allMessage of user
     router.get("/:login/getUserMessage", async (req, res) => {
-        const { login } = req.params.login;
+        const { login } = req.params;
+        console.log(login)
         if (!login) {
             res.status(400).send("login problem")
         } else if (! await users.exists(login)) {
@@ -55,6 +56,8 @@ function init(db) {
             }
         }
     });
+
+    
     //avoir ses propre message
     router.get("/getSelfMessage", async (req, res) => {
         //const { login } = req.params.login;
@@ -126,19 +129,20 @@ function init(db) {
     })
 
 
-    router.delete("/deleteMessage", async (req, res) => {
+    router.delete("/:id", async (req, res) => {
         try {
-
-
-            const { mess_id } = req.body;
-            if (!mess_id) {
+            const { id } = req.params;
+            console.log(id)
+            if (!id) {
                 res.status(505).send("message doesn't exist");
             } else {
-                let num = await messages.delete(mess_id);
-                res.status(200).send(num, "message deleted");
+                
+                let num = await messages.delete(id);
+                console.log("nbmessage deleted"+num);
+                res.status(200).send(num+ "message deleted");
             }
         } catch (e) {
-            res.status(500).send(err, " internal server error");
+            res.status(500).send(e, " internal server error");
         }
 
     })

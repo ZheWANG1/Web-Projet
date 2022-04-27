@@ -39,10 +39,12 @@ class NavigationPannel extends Component {
             )
         } else {
             if (this.props.connected == "connected") {
+
                 return (
                     <div>
-                        <Link to="/profil">
-                            <button type="button" onClick={() => { this.props.openProfil() }}>Profile</button>
+
+                        <Link to="/myprofil">
+                            <button type="button" onClick={() => { this.props.getUserInfo(); this.props.openProfil(""); console.log("reaction") }}>Profile</button>
                         </Link>
                         <Link to="/Homepage">
                             <button type="button" onClick={() => { this.props.setLogout() }}>Log out</button>
@@ -52,44 +54,50 @@ class NavigationPannel extends Component {
             }
         }
     }
-    onSubmit(event){
+    onSubmit(event) {
         event.preventDefault();
         console.log(event.target.user.checked);
         console.log(event.target.message.checked);
-        console.log("bar content" ,event.target.rbar.value)
-        if(event.target.user.checked){
-            api.get('/findUser' , {
-                params : {
-                    content : event.target.rbar.value
+        console.log("bar content", event.target.rbar.value);
+
+        if (event.target.user.checked) {
+            api.get('/findUser', {
+                params: {
+                    content: event.target.rbar.value
                 }
-                
-                
+
+
             })
 
-            //api.get(`/user/getUser/:${event.target.rbar.value}`)
-            .then(res=>{
-                //console.log(res.data)
-                if(res.data ===[]){
-                    alert("no such user check your spelling")
-                }else{
+                //api.get(`/user/getUser/:${event.target.rbar.value}`)
+                .then(res => {
+                    //console.log(res.data)
+                    if (res.data === []) {
+                        alert("no such user check your spelling")
+                    } else {
+                        console.log(res.data)
+                    }
+
+                })
+
+
+        } else if (event.target.message.checked) {
+            apimessages.get('/findmessage', {
+
+                params: {
+                    content: event.target.rbar.value
+                }
+
+
+            }).then(res => {
+                if (res.data === []) {
+                    alert("no such message")
+                } else {
                     console.log(res.data)
                 }
-                
-            })
-            
 
-        }else if(event.target.message.checked){
-            apimessages.get('/findmessage' , {
-                
-                    params :{
-                        content : event.target.rbar.value
-                    }
-                
-                
-            }).then(res=>{
-                console.log(res.data)
             })
-        }else{
+        } else {
             alert("check a check box to make a research")
         }
     }
@@ -108,11 +116,8 @@ class NavigationPannel extends Component {
                             <input type="text" id="rbar"></input>
                             <button type="submit" id="rbutton">Search</button>
                             <div>
-                                <label><input type="checkbox" id='user' name='user'></input>user</label>
-                                <label><input type="checkbox" id='message' name='message'></input>message</label>
-                                <label><input type="checkbox"></input>c3</label>
-                                <label><input type="checkbox"></input>c4</label>
-                                <label><input type="checkbox"></input>c5</label>
+                                <label><input type="radio" id='user' name='searchtype'></input>user</label>
+                                <label><input type="radio" id='message' name='searchtype'></input>message</label>
                             </div>
                         </form>
 

@@ -52,16 +52,18 @@ class Homepage extends Component {
         apimessages.get('/allmessage').then(res => {
             let tmp = []
             for (var i = 0; i < res.data.allmess.length; i++) {
-                tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} date={res.data.allmess[i].date} id={res.data.allmess[i]._id}></Message>);
+                tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} date={res.data.allmess[i].date} id={res.data.allmess[i]._id} openProfil={this.props.openProfil}></Message>);
             }
             console.log("tous message ", res.data.allmess[0].message);
             this.setState({ messages: tmp })
         })
     }
+
+    
     render() {
         return (
             <div>
-                <NavigationPannel openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
+                <NavigationPannel getUserInfo ={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras laoreet mattis neque, vitae porta ligula semper ac. Suspendisse potenti. In vitae congue felis, venenatis eleifend ipsum. Nam at sapien sed quam semper tempor a et orci. In ullamcorper,

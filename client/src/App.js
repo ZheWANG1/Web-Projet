@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Signup from './components/Signup';
 import Profil from './components/Profil';
+import MyProfil from './components/MyProfil';
 import NavigationPannel from './components/NavigationPannel';
 import Homepage from './components/Homepage';
 import axios from 'axios';
@@ -13,7 +14,8 @@ import {
   Routes,
   Route,
   Link,
-  NavLink
+  NavLink,
+  useParams
 
 } from "react-router-dom";
 
@@ -40,7 +42,8 @@ class App extends Component {
     this.state = {
       user: "homepage",
       connected: "notconnected",
-      userinfo: []
+      userinfo: [], 
+      profil: "",
     };
 
     this.setlogout = this.setLogout.bind(this);
@@ -54,14 +57,16 @@ class App extends Component {
   componentDidMount() {
 
     this.changeProfilePhotoRef = createRef();
-
-    api.get('/user/self').then(res => {
-      console.log(res.data);
+    
+   
+      api.get('/user/self').then(res => {
+      //console.log(res.data);
       if (res.data[0] != null) {
         this.setState({ connected: "connected", userinfo: res.data })
       }
     })
   }
+
 
   getUserInfo = async () => {
     await api.get('/user/self').then(res => {
@@ -84,8 +89,8 @@ class App extends Component {
     this.setState({ user: "login" });
   }
 
-  openProfil = () => {
-    this.setState({ user: "profil" });
+  openProfil = (n) => {
+    this.setState({ user: "profil", profil: n });
   }
 
   setConnexionState = (v) => {
@@ -115,7 +120,7 @@ class App extends Component {
       }
 
       if (this.state.user == "profil") {
-        return <Profil userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>
+        return <Profil content = {this.state.profil} userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>
       }
     }
   }
@@ -131,9 +136,14 @@ class App extends Component {
           </Route>
           <Route path="/signup" element={<Signup userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
-          <Route path="/homepage" element={<Homepage openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
+          <Route path="/homepage" element={<Homepage getUserInfo = {this.getUserInfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
           </Route>
-          <Route path="/profil" element={<Profil getUserInfo={this.getUserInfo} userinfo={this.state.userinfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>}></Route>
+          <Route path="/profil" element={<Profil content = {this.state.profil} getUserInfo={this.getUserInfo} userinfo={this.state.userinfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>}>
+          </Route>
+          <Route path="/myprofil" element={<MyProfil content = {this.state.profil} getUserInfo={this.getUserInfo} userinfo={this.state.userinfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></MyProfil>}>
+          </Route>
+          {/* <Route path="/profil/:username" element={<Profil getUserInfo={this.getUserInfo} userinfo={this.state.userinfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>}>
+          </Route> */}
         </Routes>
       </div>
 
