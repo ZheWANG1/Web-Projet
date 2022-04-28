@@ -22,6 +22,7 @@ class NavigationPannel extends Component {
 
     constructor(props) {
         super(props);
+        this.state = { researched: undefined }
 
     }
 
@@ -76,6 +77,13 @@ class NavigationPannel extends Component {
                         alert("no such user check your spelling")
                     } else {
                         console.log(res.data)
+                        let userList = []
+                        for (var i = 0; i < res.data.length; i++) {
+
+                            userList.push(<User login = {res.data[i].login} openProfil={this.props.openProfil}></User>);
+    
+                        }
+                        this.setState({ researched: userList });
                     }
 
                 })
@@ -94,6 +102,15 @@ class NavigationPannel extends Component {
                     alert("no such message")
                 } else {
                     console.log(res.data)
+
+
+                    let messageList = []
+                    for (var i = 0; i < res.data.length; i++) {
+
+                        messageList.push(<Message message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
+
+                    }
+                    this.setState({ researched: messageList });
                 }
 
             })
@@ -105,6 +122,10 @@ class NavigationPannel extends Component {
     render() {
         return (
             <div>
+                <Routes>
+                    <Route path="/resultpage" element={<ResultPage researched={this.state.researched} setResearch={this.setState}></ResultPage>}></Route>
+                </Routes>
+                {this.state.researched && <Navigate to="/resultpage"></Navigate>}
                 <header id="homepage-header">
                     <div id="divlogo">
                         <Link to="/Homepage">
