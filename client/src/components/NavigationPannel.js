@@ -3,6 +3,11 @@ import '../App.css';
 import logo from './logo512.png';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import User from './User';
+import Message from './Message';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import ResultPage from './ResultPage';
+
 //import api from '../../../server/src/api';
 const api = axios.create({
     withCredentials: true,
