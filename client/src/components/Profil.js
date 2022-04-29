@@ -4,6 +4,7 @@ import NavigationPannel from './NavigationPannel';
 import Message from './Message';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
+import User from './User';
 
 const api = axios.create({
     withCredentials: true,
@@ -28,7 +29,8 @@ class Profil extends Component {
             userinfo: props.userinfo[0] ? props.userinfo : [{ "login": "login" }],
             messages: [],
             content: props.content ? props.content : "",
-            profil: [{ "login": "login" }]
+            profil: [{ "login": "login", "following": [], "followers": [] }],
+            researched: undefined
         };
 
 
@@ -63,19 +65,49 @@ class Profil extends Component {
     }
 
 
-    listItems() {
-        var items = [];
-        for (var i = 0; i < this.friendList.length; i++) {
-            items.push(<li key={i}>{this.friendList[i]}</li>);
+    toFollowingResult = () => {
+        let userList = []
+        console.log("following : ", this.state.profil[0].following);
+        for (var i = 0; i < this.state.profil[0].following.length; i++) {
+            userList.push(<User login={this.state.profil[0].following[i]} openProfil={this.props.openProfil}></User>);
         }
-        return items;
+        this.props.setResearch(userList);
+        this.setState({ researched: true })
     }
+
+
+    toFollowerResult = () => {
+        let userList = []
+        for (var i = 0; i < this.state.profil[0].followers.length; i++) {
+            userList.push(<User login={this.state.profil[0].followers[i]} openProfil={this.props.openProfil}></User>);
+        }
+        this.props.setResearch(userList);
+        this.setState({ researched: true })
+    }
+
+
+    follow = () => { 
+        api.post('/user/self/follow', {
+            Flogin: this.state.profil[0].login
+        }).then(res => {
+            console.log("follow : ", res.data);
+        })
+    }
+
+    unfollow = () => {
+        api.post('/user/self/unfollow', {
+            Flogin: this.state.profil[0].login
+        }).then(res => {
+            console.log("unfollow : ", res.data);
+        })
+    }
+
 
     render() {
         return (
             <div>
                 {this.props.connected == "notconnected" && <Navigate to="/login"></Navigate>}
-                <NavigationPannel getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
+                <NavigationPannel setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
                         <div id="userinfo">
@@ -84,10 +116,18 @@ class Profil extends Component {
                             <p> Lastname : {this.state.profil[0].lastname}</p>
 
                         </div>
-                        <p>following {this.state.userinfo[0].following.length}</p>
-                        <ul>
-                            {this.listItems()}
-                        </ul>
+                        {this.state.researched && !this.setState({ researched: undefined }) && <Navigate to="/resultpage"></Navigate>}
+                        <div onClick={() => { this.toFollowingResult(); }}>
+                            <p >following {this.state.profil[0].following.length}</p>
+                        </div>
+                        <div onClick={() => { this.toFollowerResult(); }}>
+                            <p>followers {this.state.profil[0].followers.length}</p>
+                        </div>
+                        {this.state.profil[0].login == this.state.userinfo[0].login ? <p></p> :
+                        (this.state.userinfo[0].following.includes(this.state.profil[0].login) ?
+                            <button type="button" onClick={() => {this.unfollow()}}>Unfollow</button> :
+                            <button type="button" onClick={() => {this.follow()}}>Follow</button>)}
+
                     </div>
 
                     <div id="zoneright">

@@ -27,27 +27,21 @@ class User extends Component {
             login: ""
             
         }
-
-        
     }
 
 
     componentDidMount() {
-        
         this.setState({
             login: this.props.login
             
         })
     }
 
-  
-
-
     render() {
         return (
             <div class="commentaire">
                 <Link to="/profil">
-                    <h4 id="username" onClick={() => { this.props.openProfil(this.state.user) }} >{this.state.login}</h4>
+                    <h4 id="username" onClick={() => { this.props.openProfil(this.state.login) }} >{this.state.login}</h4>
                 </Link>
                 
             </div>

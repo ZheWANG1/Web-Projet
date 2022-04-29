@@ -40,7 +40,7 @@ class Homepage extends Component {
         apimessages.post('/message', {
             message: document.getElementsByName('newtext')[0].value
         }).then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             window.location.reload();
         }).catch(err => {
             console.log(err);
@@ -63,7 +63,7 @@ class Homepage extends Component {
     render() {
         return (
             <div>
-                <NavigationPannel getUserInfo ={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
+                <NavigationPannel researched = {this.props.researched} setResearch = {this.props.setResearch} getUserInfo ={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras laoreet mattis neque, vitae porta ligula semper ac. Suspendisse potenti. In vitae congue felis, venenatis eleifend ipsum. Nam at sapien sed quam semper tempor a et orci. In ullamcorper,

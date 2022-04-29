@@ -6,6 +6,10 @@ h1 {
   color: #bbb;
 }
 
+h4 {
+  color: rgb(211, 211, 211);
+}
+
 .MainPage {
   text-align: center;
 
@@ -49,8 +53,6 @@ h1 {
 #homepage-header div {
   display: inline-block;
 }
-
-
 
 #search {
   width: 70%;
@@ -225,6 +227,13 @@ h1 {
 
 #username {
   font-size: 18px;
+}
+
+#result {
+  margin: 20px;
+  margin-top: 20px;
+  margin-right: 30%;
+  margin-left: 10%;
 }
 
 

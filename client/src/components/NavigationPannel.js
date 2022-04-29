@@ -29,6 +29,9 @@ class NavigationPannel extends Component {
         super(props);
         this.state = { researched: undefined }
 
+        this.onSubmit = this.onSubmit.bind(this);
+        this.changeConnect = this.changeConnect.bind(this);
+
     }
 
     changeConnect() {
@@ -71,8 +74,6 @@ class NavigationPannel extends Component {
                 params: {
                     content: event.target.rbar.value
                 }
-
-
             })
 
                 //api.get(`/user/getUser/:${event.target.rbar.value}`)
@@ -81,16 +82,21 @@ class NavigationPannel extends Component {
                     if (res.data === []) {
                         alert("no such user check your spelling")
                     } else {
-                        console.log(res.data)
+                        //console.log(res.data)
+                        console.log(this.props)
                         let userList = []
                         for (var i = 0; i < res.data.length; i++) {
 
-                            userList.push(<User login = {res.data[i].login} openProfil={this.props.openProfil}></User>);
-    
-                        }
-                        this.setState({ researched: userList });
-                    }
+                            userList.push(<User login={res.data[i].login} openProfil={this.props.openProfil}></User>);
 
+                        }
+                        this.props.setResearch(userList);
+                        this.setState({ researched: userList });
+                        if (this.props.inresult) {
+                            this.props.setResults(userList);
+                        }
+                        console.log("researched", this.state.researched)
+                    }
                 })
 
 
@@ -106,8 +112,8 @@ class NavigationPannel extends Component {
                 if (res.data === []) {
                     alert("no such message")
                 } else {
-                    console.log(res.data)
-
+                    //console.log(res.data)
+                    console.log(this.props)
 
                     let messageList = []
                     for (var i = 0; i < res.data.length; i++) {
@@ -115,7 +121,13 @@ class NavigationPannel extends Component {
                         messageList.push(<Message message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
 
                     }
+                    console.log("messageList : ",  messageList)
+                    this.props.setResearch(messageList);
                     this.setState({ researched: messageList });
+                    if (this.props.inresult) {
+                        this.props.setResults(messageList);
+                    }
+                    console.log("researched : ", this.state.researched)
                 }
 
             })
@@ -127,10 +139,8 @@ class NavigationPannel extends Component {
     render() {
         return (
             <div>
-                <Routes>
-                    <Route path="/resultpage" element={<ResultPage researched={this.state.researched} setResearch={this.setState}></ResultPage>}></Route>
-                </Routes>
-                {this.state.researched && <Navigate to="/resultpage"></Navigate>}
+
+                {this.state.researched  && !this.setState({ researched: undefined }) && <Navigate to="/resultpage"></Navigate>}
                 <header id="homepage-header">
                     <div id="divlogo">
                         <Link to="/Homepage">
@@ -139,7 +149,7 @@ class NavigationPannel extends Component {
                     </div>
                     <div id="search">
                         <form onSubmit={this.onSubmit} method='POST'>
-                            <input type="text" id="rbar"></input>
+                            <input type="text"  id="rbar"></input>
                             <button type="submit" id="rbutton">Search</button>
                             <div>
                                 <label><input type="radio" id='user' name='searchtype'></input>user</label>

@@ -130,6 +130,26 @@ class Users {
 
   }
 
+  unfollow(mylogin, unfollowlogin){
+    return new Promise ((resolve , reject) =>{
+      console.log(unfollowlogin)
+      this.db.users.update({ login: mylogin }, { $pull: { following: unfollowlogin } }, function (err, docs) {
+        if (err) {
+          console.log(err);
+          reject();
+        }
+      })
+      console.log("2");
+      this.db.users.update({ login: unfollowlogin }, { $pull: { followers: mylogin } }, function (err, docs) {
+        if (err) {
+          console.log(err);
+          reject();
+        }
+      })
+      resolve();
+    });
+  }
+
 
   
 
