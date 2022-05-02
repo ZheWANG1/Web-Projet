@@ -4,6 +4,7 @@ const apimessages = require('./apimessages.js');
 const apifriends  =require('./apifriends.js')
 const DataStore = require('nedb')
 const cors = require('cors')
+const multer = require("multer"); // upload file
 
 // Détermine le répertoire de base
 const basedir = path.normalize(path.dirname(__dirname));
@@ -39,6 +40,35 @@ app.use(session({
 
 
 }));
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "public/images")
+    },
+    filename: (req, file, cb) => {
+        const fn = parseInt(Date.now() / 10000000) + "-" + file.originalname;
+        cb(null, fn)
+    }
+});
+const upload = multer({
+    storage: storage
+});
+
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+    try {
+        if(!req.file){
+            console.log("no file uploaded")
+        }else{
+
+        
+        return res.status(200).json("uploaded");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 app.use('/api', api.default(db));
 app.use('/apimessages', apimessages.default(db));
