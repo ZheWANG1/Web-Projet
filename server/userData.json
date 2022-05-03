@@ -1,2 +1,3 @@
 {"login":"u1","password":"1","lastname":"n","firstname":"p","following":[],"followers":[],"_id":"AcKfvbHggiSDnjvO"}
+{"login":"user3","password":"1","lastname":"last","firstname":"first","following":[],"followers":[],"profilePhoto":"http://localhost:4000/public/images/defaultAvatar.jpg","_id":"JJwoLUyTNjFPZKYQ"}
 {"login":"user1","password":"1","lastname":"last","firstname":"first","following":[],"followers":[],"_id":"VeJ5ARk2YAwKi9lw"}

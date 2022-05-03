@@ -23,6 +23,9 @@ const apimessages = axios.create({
     headers: { 'Content-Type': 'application/json' }
 })
 
+//const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+const PF = "http://localhost:4000/public/images/"
+
 class NavigationPannel extends Component {
 
     constructor(props) {
@@ -135,7 +138,13 @@ class NavigationPannel extends Component {
             alert("check a check box to make a research")
         }
     }
-
+    image = () =>{
+        try{
+            return <img src = {this.props.userinfo[0]? this.props.userinfo[0].profilePhoto : `${PF}defaultAvatar.jpg`} ></img>
+        }catch(err){
+            console.log("err: " , err)
+        }
+    }
     render() {
         return (
             <div>
@@ -160,7 +169,9 @@ class NavigationPannel extends Component {
                     </div>
 
                     <div id="profile">
-                        {this.changeConnect()}
+                        
+                    {this.image()}
+                    {this.changeConnect()}
                     </div>
 
                 </header>

@@ -107,7 +107,7 @@ class Profil extends Component {
         return (
             <div>
                 {this.props.connected == "notconnected" && <Navigate to="/login"></Navigate>}
-                <NavigationPannel setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
+                <NavigationPannel userinfo = {this.props.userinfo} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
                         <div id="userinfo">

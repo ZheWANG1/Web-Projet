@@ -24,7 +24,7 @@ class ResultPage extends Component {
         
         return (
             <div>
-                <NavigationPannel inresult = {true} setResults={this.setResults} setResearch = {this.props.setResearch} getUserInfo ={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
+                <NavigationPannel userinfo = {this.props.userinfo} inresult = {true} setResults={this.setResults} setResearch = {this.props.setResearch} getUserInfo ={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
 
                 <div id="result">
                     {this.state.results}

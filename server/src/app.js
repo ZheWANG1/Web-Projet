@@ -5,6 +5,8 @@ const apifriends  =require('./apifriends.js')
 const DataStore = require('nedb')
 const cors = require('cors')
 const multer = require("multer"); // upload file
+const dotenv = require("dotenv"); // for security
+ dotenv.config();
 
 // Détermine le répertoire de base
 const basedir = path.normalize(path.dirname(__dirname));

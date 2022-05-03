@@ -1,5 +1,6 @@
 const e = require("express");
 const { resolve } = require("path/posix");
+const defaultimage = "http://localhost:4000/public/images/";
 
 class Users {
   constructor(db) {
@@ -14,12 +15,13 @@ class Users {
 
 
 
-      this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname, following: [], followers: [] }, function (err, docs) {
+      this.db.users.insert({ login: login, password: password, lastname: lastname, firstname: firstname, following: [], followers: [],profilePhoto :  defaultimage+"defaultAvatar.jpg" }, function (err, docs) {
         let userid = docs._id
         if (!userid) {
           //erreur
           reject();
         } else {
+          console.log(defaultimage+"defaultAvatar.jpg");
           resolve(userid);
         }
       })
