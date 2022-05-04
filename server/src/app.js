@@ -1,12 +1,12 @@
 const path = require('path');
 const api = require('./api.js');
 const apimessages = require('./apimessages.js');
-const apifriends  =require('./apifriends.js')
+const apifriends = require('./apifriends.js')
 const DataStore = require('nedb')
 const cors = require('cors')
 const multer = require("multer"); // upload file
 const dotenv = require("dotenv"); // for security
- dotenv.config();
+dotenv.config();
 
 // Détermine le répertoire de base
 const basedir = path.normalize(path.dirname(__dirname));
@@ -17,9 +17,9 @@ const app = express()
 api_1 = require("./api.js");
 const session = require("express-session");
 const db = {};
-db.users = new DataStore({filename : "./userData.json"});
-db.messages = new DataStore({filename : "./messageData.json"});
-db.friends = new DataStore({filename : "./friendData.json"});
+db.users = new DataStore({ filename: "./userData.json" });
+db.messages = new DataStore({ filename: "./messageData.json" });
+db.friends = new DataStore({ filename: "./friendData.json" });
 
 db.users.persistence.setAutocompactionInterval('5000')
 db.users.loadDatabase();
@@ -29,20 +29,21 @@ db.friends.loadDatabase();
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000'   // IP sur laquelle tourne votre client
- }));
+}));
 
 app.use(session({
     secret: "technoweb rocks",
-    resave : true,
+    resave: true,
     saveUninitialized: true,
-    cookie : {
+    cookie: {
         //secure : true ,
-        sameSite: process.env.NODE_ENV === "production"?"none":"lax"
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     }
 
 
 }));
 
+app.use("/images", express.static(path.join(__dirname + "/public/images")));
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -57,16 +58,31 @@ const upload = multer({
     storage: storage
 });
 
-
 app.post("/api/upload", upload.single("file"), (req, res) => {
     try {
-        if(!req.file){
+        if (!req.file) {
             console.log("no file uploaded")
-        }else{
-
-        
-        return res.status(200).json("uploaded");
+        } else {
+            return res.status(200).json("uploaded");
         }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.get("/public/images/:image", (req, res) => {
+    try {
+        const image = req.params.image;
+        res.sendFile(path.join(basedir + "/public/images/" + image));
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+app.get("/images/:image", (req, res) => {
+    try {
+        const image = req.params.image;
+        res.sendFile(path.join(basedir + "/public/images/" + image));
     } catch (error) {
         console.log(error);
     }

@@ -30,7 +30,10 @@ class Profil extends Component {
             messages: [],
             content: props.content ? props.content : "",
             profil: [{ "login": "login", "following": [], "followers": [] }],
-            researched: undefined
+            researched: undefined,
+            nbFollowing: 0,
+            nbFollowers: 0,
+            hasFollowing: false,
         };
 
 
@@ -45,18 +48,22 @@ class Profil extends Component {
                 login: this.state.content
             }
         }).then(res => {
+            console.log("content ", this.state.content);
             this.state.profil = res.data
 
 
             if (this.state.content === "" || this.state.profil === [] || this.state.profil[0].login === this.state.userinfo[0].login) {
                 this.state.profil = this.state.userinfo
             }
-            console.log("profil : ", this.state.profil);
+            //console.log("profil : ", this.state.profil);
+            this.setState({ nbFollowing: res.data[0].following.length })
+            this.setState({ nbFollowers: res.data[0].followers.length })
+            this.setState({ hasFollowing: res.data[0].followers.includes(this.state.userinfo[0].login) })
             apimessages.get(`${this.state.profil[0].login}/getUserMessage`).then(res => {
                 let tmp = []
                 for (var i = 0; i < res.data.length; i++) {
 
-                    tmp.push(<Message message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
+                    tmp.push(<Message profilePhoto={this.state.profil[0].profilePhoto} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
 
                 }
                 this.setState({ messages: tmp })
@@ -86,47 +93,63 @@ class Profil extends Component {
     }
 
 
-    follow = () => { 
+    follow = () => {
         api.post('/user/self/follow', {
             Flogin: this.state.profil[0].login
         }).then(res => {
             console.log("follow : ", res.data);
-        })
+            this.setState({ nbFollowers: this.state.nbFollowers + 1, hasFollowing: true })
+        });
     }
+
 
     unfollow = () => {
         api.post('/user/self/unfollow', {
             Flogin: this.state.profil[0].login
         }).then(res => {
             console.log("unfollow : ", res.data);
-        })
+            this.setState({ nbFollowers: this.state.nbFollowers - 1, hasFollowing: false })
+        });
     }
-
 
     render() {
         return (
             <div>
-                {this.props.connected == "notconnected" && <Navigate to="/login"></Navigate>}
-                <NavigationPannel userinfo = {this.props.userinfo} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
+                {/* {this.props.connected == "notconnected" && <Navigate to="/login"></Navigate>} */}
+                < NavigationPannel userinfo={this.props.userinfo} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected} ></NavigationPannel >
                 <div>
                     <div id="zoneleft">
                         <div id="userinfo">
+                            <div id="profil_profilephoto">
+                                <img src={this.state.profil[0].profilePhoto} ></img>
+                            </div>
+                            <div id="userinfo_nom">
+                                <h3 id="nom"> {this.state.profil[0].firstname + " " + this.state.profil[0].lastname}</h3>
+                                {this.state.profil[0].login == this.state.userinfo[0].login ? <p></p> :
+                                    (this.state.hasFollowing ?
+                                        <div type="button" onClick={() => { this.unfollow() }}>
+                                            <p>Unfollow</p>
+                                        </div> :
+                                        <div onClick={() => { this.follow() }}>
+                                            <p>Follow</p>
+                                        </div>)}
+                            </div>
+
                             <p> Username : {this.state.profil[0].login}</p>
-                            <p> Firstname : {this.state.profil[0].firstname}</p>
-                            <p> Lastname : {this.state.profil[0].lastname}</p>
 
                         </div>
                         {this.state.researched && !this.setState({ researched: undefined }) && <Navigate to="/resultpage"></Navigate>}
-                        <div onClick={() => { this.toFollowingResult(); }}>
-                            <p >following {this.state.profil[0].following.length}</p>
+                        <div id="follow">
+                            <div onClick={() => { this.toFollowingResult(); }} id="following">
+                                <h3>{this.state.profil[0].following ? this.state.nbFollowing : "0"}</h3>
+                                <h4>following </h4>
+                            </div>
+                            <div onClick={() => { this.toFollowerResult(); }} id="follower">
+                                <h3>{this.state.profil[0].followers ? this.state.nbFollowers : "0"}</h3>
+                                <h4>followers </h4>
+                            </div>
                         </div>
-                        <div onClick={() => { this.toFollowerResult(); }}>
-                            <p>followers {this.state.profil[0].followers.length}</p>
-                        </div>
-                        {this.state.profil[0].login == this.state.userinfo[0].login ? <p></p> :
-                        (this.state.userinfo[0].following.includes(this.state.profil[0].login) ?
-                            <button type="button" onClick={() => {this.unfollow()}}>Unfollow</button> :
-                            <button type="button" onClick={() => {this.follow()}}>Follow</button>)}
+
 
                     </div>
 
@@ -139,7 +162,7 @@ class Profil extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
 
     }

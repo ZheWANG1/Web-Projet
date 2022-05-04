@@ -24,16 +24,23 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            login: ""
-            
+            login: "",
+            ProfilePhoto: ""
         }
     }
-
 
     componentDidMount() {
         this.setState({
             login: this.props.login
-            
+
+        })
+
+        api.get('/user/getUser', {
+            params: {
+                login: this.props.login
+            }
+        }).then(res => {
+            this.setState({ ProfilePhoto: res.data[0].profilePhoto })
         })
     }
 
@@ -41,9 +48,11 @@ class User extends Component {
         return (
             <div class="commentaire">
                 <Link to="/profil">
+                    <img id="commentaire_profilphoto" onClick={() => { this.props.openProfil(this.state.login) }} src={this.state.ProfilePhoto} ></img>
+
                     <h4 id="username" onClick={() => { this.props.openProfil(this.state.login) }} >{this.state.login}</h4>
                 </Link>
-                
+
             </div>
         )
     }

@@ -250,6 +250,20 @@ function init(db) {
         }
     })
 
+    router.post("/user/self/updateProfileImage", async (req, res) => {
+        try{
+            console.log("body : " , req.body)
+            users.updateProfileImage(req.session.username , req.body.filename)
+            res.sendStatus(200);
+            
+        }catch(e){
+            res.status(500).send("internal server error , unknown")
+        }
+    })
+
+
+
+
 
 
 

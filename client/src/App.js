@@ -62,10 +62,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
-    
-
-
     api.get('/user/self').then(res => {
       //console.log(res.data);
       if (res.data[0] != null) {
@@ -83,6 +79,7 @@ class App extends Component {
     await api.get('/user/self').then(res => {
       this.setState({ connected: "connected", userinfo: res.data })
     })
+    console.log(this.state.userinfo);
   }
 
   getState = () => {
@@ -134,7 +131,7 @@ class App extends Component {
     }
   }
 
-  
+
 
 
 
@@ -142,19 +139,19 @@ class App extends Component {
     return (
       <div className="MainPage">
         <Routes>
-          <Route className="MainPage-body" path="/*" element={<Homepage userinfo={this.state.userinfo}  changeProfilePhotoRef ={ this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
+          <Route className="MainPage-body" path="/*" element={<Homepage userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
           </Route>
           <Route path="/login" element={<Login userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setHomepage={this.setHomepage} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
           <Route path="/signup" element={<Signup userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
-          <Route path="/homepage" element={<Homepage userinfo={this.state.userinfo}  changeProfilePhotoRef ={ this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
+          <Route path="/homepage" element={<Homepage userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
           </Route>
-          <Route path="/profil" element={<Profil userinfo={this.state.userinfo}  changeProfilePhotoRef ={ this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} content={this.state.profil} getUserInfo={this.getUserInfo} userinfo={this.state.userinfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>}>
+          <Route path="/profil" element={<Profil content={this.state.profil} userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} content={this.state.profil} getUserInfo={this.getUserInfo}  openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>}>
           </Route>
-          <Route path="/myprofil" element={<MyProfil userinfo={this.state.userinfo} changeProfilePhotoRef ={ this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} content={this.state.profil} getUserInfo={this.getUserInfo} userinfo={this.state.userinfo} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></MyProfil>}>
+          <Route path="/myprofil" element={<MyProfil userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} content={this.state.profil} getUserInfo={this.getUserInfo}  openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></MyProfil>}>
           </Route>
-          <Route path="/resultpage" element={<ResultPage userinfo={this.state.userinfo}  changeProfilePhotoRef ={ this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></ResultPage>}></Route>
+          <Route path="/resultpage" element={<ResultPage userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} openProfil={this.openProfil} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></ResultPage>}></Route>
         </Routes>
       </div>
 

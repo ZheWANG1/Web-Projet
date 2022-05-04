@@ -20,14 +20,15 @@ function init(db) {
     // createMessage
     router.post("/message", async (req, res) => {
 
-        const { message } = req.body;
+        const { message , images } = req.body;
         if (!message) {
             res.status(400).send("Missing fields");
         } else if (!req.session.username) {
             res.status(401).send("Vous n'êtes pas autorisé à poster un message");
         } else {
             console.log(req.session.username)
-            messages.create(message, req.session.username)
+            console.log(req.body);
+            messages.create(message, req.session.username , images)
                 .then((message_id) => res.status(201).send({ id: message_id }))
                 .catch((err) => res.status(500).send(err));
         }
@@ -85,16 +86,28 @@ function init(db) {
 
     //get message by id
     router.get("/message/:id", async (req, res) => {
-        try {
-            res.send({
-                status: 200, message: await messages.get(
-                    req.params.id
-                )
-            });
-        }
-        catch (e) {
-            console.error(e);
-            res.status(500).send({ status: 500, message: "internal server error" });
+        try{
+            console.log("id", req.params.id)
+            const { id } = req.params;
+            if (!id) {
+                res.status(400).send("Missing fields");
+            } else {
+                try {
+                    mess = await messages.getMessage(id)
+                    if (!mess) {
+                        res.sendStatus(400)
+                    } else {
+                        console.log("message trouver : ", mess)
+                        res.send(mess)
+                    }
+                } catch (e) {
+                    console.log(e);
+                    res.status(500).send(e)
+                }
+            }
+        }catch(e){
+            console.log(e);
+            res.status(500).send(e)
         }
     })
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import logo from './logo512.png';
+import logo from './logo1.png';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import User from './User';
@@ -23,8 +23,8 @@ const apimessages = axios.create({
     headers: { 'Content-Type': 'application/json' }
 })
 
-//const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-const PF = "http://localhost:4000/public/images/"
+const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+//const PF = "http://localhost:4000/public/images/"
 
 class NavigationPannel extends Component {
 
@@ -39,9 +39,13 @@ class NavigationPannel extends Component {
 
     changeConnect() {
         if (this.props.connected == "notconnected") {
+            console.log("profile photo : ", `${PF}defaultAvatar.jpg`);
             return (
                 <div>
+
+                    
                     <Link to="/login">
+                    <img id="profilephoto" onClick={this.props.setLogin} src={`${PF}defaultAvatar.jpg`} ></img>
                         <button type="button" onClick={this.props.setLogin}>Log in</button>
                     </Link>
                     <Link to="/signup">
@@ -51,12 +55,14 @@ class NavigationPannel extends Component {
             )
         } else {
             if (this.props.connected == "connected") {
-
+                console.log("profile photo : ", this.props.userinfo[0]);
                 return (
                     <div>
 
                         <Link to="/myprofil">
-                            <button type="button" onClick={() => { this.props.getUserInfo(); this.props.openProfil(""); console.log("reaction") }}>Profile</button>
+                        <img id="profilephoto" onClick={() => { this.props.getUserInfo(); this.props.openProfil(""); console.log("reaction") }} src={this.props.userinfo[0] ? this.props.userinfo[0].profilePhoto : ""}></img>
+
+                            {/* <button type="button" onClick={() => { this.props.getUserInfo(); this.props.openProfil(""); console.log("reaction") }}>Profile</button> */}
                         </Link>
                         <Link to="/Homepage">
                             <button type="button" onClick={() => { this.props.setLogout() }}>Log out</button>
@@ -124,7 +130,7 @@ class NavigationPannel extends Component {
                         messageList.push(<Message message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
 
                     }
-                    console.log("messageList : ",  messageList)
+                    console.log("messageList : ", messageList)
                     this.props.setResearch(messageList);
                     this.setState({ researched: messageList });
                     if (this.props.inresult) {
@@ -138,18 +144,18 @@ class NavigationPannel extends Component {
             alert("check a check box to make a research")
         }
     }
-    image = () =>{
-        try{
-            return <img src = {this.props.userinfo[0]? this.props.userinfo[0].profilePhoto : `${PF}defaultAvatar.jpg`} ></img>
-        }catch(err){
-            console.log("err: " , err)
+    image = () => {
+        try {
+            return <img src={this.props.userinfo[0] ? this.props.userinfo[0].profilePhoto : `${PF}defaultAvatar.jpg`} ></img>
+        } catch (err) {
+            console.log("err: ", err)
         }
     }
     render() {
         return (
             <div>
 
-                {this.state.researched  && !this.setState({ researched: undefined }) && <Navigate to="/resultpage"></Navigate>}
+                {this.state.researched && !this.setState({ researched: undefined }) && <Navigate to="/resultpage"></Navigate>}
                 <header id="homepage-header">
                     <div id="divlogo">
                         <Link to="/Homepage">
@@ -158,7 +164,7 @@ class NavigationPannel extends Component {
                     </div>
                     <div id="search">
                         <form onSubmit={this.onSubmit} method='POST'>
-                            <input type="text"  id="rbar"></input>
+                            <input type="text" id="rbar"></input>
                             <button type="submit" id="rbutton">Search</button>
                             <div>
                                 <label><input type="radio" id='user' name='searchtype'></input>user</label>
@@ -169,9 +175,7 @@ class NavigationPannel extends Component {
                     </div>
 
                     <div id="profile">
-                        
-                    {this.image()}
-                    {this.changeConnect()}
+                        {this.changeConnect()}
                     </div>
 
                 </header>

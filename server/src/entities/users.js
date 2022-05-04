@@ -152,6 +152,15 @@ class Users {
     });
   }
 
+  updateProfileImage(username,filename){
+    return new Promise((resolve, reject) => {
+
+      this.db.users.update({ login: username }, {$set : {profilePhoto : defaultimage+filename}}, function (err, docs){
+        resolve()
+      });
+    })
+  }
+
 
   
 
