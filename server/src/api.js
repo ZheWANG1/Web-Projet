@@ -193,7 +193,7 @@ function init(db) {
             res.send(500).json({ message: "internal server error , unknown" })
         }
     })
-
+    
     //follow 
     router.post("/user/self/follow", async (req, res) => {
         try {
