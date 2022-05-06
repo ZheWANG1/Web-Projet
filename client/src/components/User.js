@@ -46,7 +46,7 @@ class User extends Component {
 
     render() {
         return (
-            <div class="commentaire">
+            <div id="commentaire">
                 <Link to="/profil">
                     <img id="commentaire_profilphoto" onClick={() => { this.props.openProfil(this.state.login) }} src={this.state.ProfilePhoto} ></img>
 
