@@ -113,6 +113,9 @@ class Profil extends Component {
     }
 
     render() {
+        while (!this.state.userinfo){
+            window.location.reload()
+        }
         return (
             <div>
                 {/* {this.props.connected == "notconnected" && <Navigate to="/login"></Navigate>} */}

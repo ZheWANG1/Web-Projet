@@ -93,7 +93,7 @@ class Homepage extends Component {
         apimessages.get('/allmessage').then(res => {
             let tmp = []
             for (var i = 0; i < res.data.allmess.length; i++) {
-                tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} date={res.data.allmess[i].date} id={res.data.allmess[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails} ></Message>);
+                tmp.push(<Message userinfo = {this.props.userinfo} connected = {this.props.connected} message={res.data.allmess[i].message} user={res.data.allmess[i].login} date={res.data.allmess[i].date} id={res.data.allmess[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails} ></Message>);
             }
             console.log("tous message ", res.data.allmess[0].message);
             this.setState({ messages: tmp })
@@ -129,10 +129,7 @@ class Homepage extends Component {
                 <NavigationPannel userinfo={this.props.userinfo} researched={this.props.researched} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} openDetails={this.props.openDetails} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
                 <div>
                     <div id="zoneleft">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras laoreet mattis neque, vitae porta ligula semper ac. Suspendisse potenti. In vitae congue felis, venenatis eleifend ipsum. Nam at sapien sed quam semper tempor a et orci. In ullamcorper,
-                            enim ac bibendum venenatis, massa diam aliquam eros, vitae gravida odio odio sit amet mi. Maecenas enim sapien, dictum rutrum sem eget, iaculis iaculis elit. Nam mi sem, convallis at dictum in, auctor mollis quam. In sodales sapien ut
-                            eros congue vehicula. In elementum, purus ut dapibus venenatis, tellus ante vestibulum nulla, quis cursus urna nisi non ligula. In porttitor sed mauris et feugiat. Maecenas non aliquet arcu, non congue ante. Quisque pellentesque faucibus
-                            enim, id luctus lectus consequat eu.</p>
+                        
                     </div>
                     <div id="zoneright">
                         <div id="zoneNewC" >

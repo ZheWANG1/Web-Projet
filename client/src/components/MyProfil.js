@@ -150,6 +150,9 @@ class MyProfil extends Component {
 
 
     render() {
+        while (!this.state.userinfo){
+            window.location.reload()
+        }
         return (
             <div>
                 <NavigationPannel userinfo={this.props.userinfo} researched={this.props.researched} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>

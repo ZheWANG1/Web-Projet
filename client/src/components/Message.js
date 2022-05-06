@@ -68,12 +68,19 @@ class Message extends Component {
 
 
     render() {
+        console.log("++++++++++++++++ " , this.props.userinfo)
         return (
+           
             <div id="commentaire">
+
+                {!this.props.userinfo  ||this.props.userinfo.length === 0  ? <Link to="/login">
+                    <img id="commentaire_profilphoto" alt="profil" onClick={() => { this.props.openProfil(this.state.user) }} src={this.state.ProfilePhoto} ></img>
+                    <h4 id="username" onClick={() => { this.props.openProfil(this.state.user) }} >{this.state.user}</h4>
+                </Link> :
                 <Link to="/profil">
                     <img id="commentaire_profilphoto" alt="profil" onClick={() => { this.props.openProfil(this.state.user) }} src={this.state.ProfilePhoto} ></img>
                     <h4 id="username" onClick={() => { this.props.openProfil(this.state.user) }} >{this.state.user}</h4>
-                </Link>
+                </Link>}
                 {this.props.delete === 1 ?
                     <div id="deletebutton" onClick={() => { this.deleteMessage(); window.location.reload() }}>
                         <h4 id="delete">X</h4>

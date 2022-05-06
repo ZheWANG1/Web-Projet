@@ -45,13 +45,20 @@ class User extends Component {
     }
 
     render() {
+        console.log("--------------------------" ,this.props.userinfo)
         return (
             <div id="commentaire">
+                
+                {this.props.userinfo.length === 0 ? <Link to="/login">
+                    <img id="commentaire_profilphoto" alt="profil" onClick={() => { this.props.openProfil(this.state.login) }} src={this.state.ProfilePhoto} ></img>
+                    <h4 id="username" onClick={() => { this.props.openProfil(this.state.login) }} >{this.state.login}</h4>
+                </Link> :
+
                 <Link to="/profil">
                     <img id="commentaire_profilphoto" onClick={() => { this.props.openProfil(this.state.login) }} src={this.state.ProfilePhoto} ></img>
 
                     <h4 id="username" onClick={() => { this.props.openProfil(this.state.login) }} >{this.state.login}</h4>
-                </Link>
+                </Link>}
 
             </div>
         )

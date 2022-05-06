@@ -95,7 +95,7 @@ class NavigationPannel extends Component {
                         let userList = []
                         for (var i = 0; i < res.data.length; i++) {
 
-                            userList.push(<User login={res.data[i].login} openProfil={this.props.openProfil}></User>);
+                            userList.push(<User userinfo = {this.props.userinfo} login={res.data[i].login} openProfil={this.props.openProfil}></User>);
 
                         }
                         this.props.setResearch(userList);
@@ -126,7 +126,7 @@ class NavigationPannel extends Component {
                     let messageList = []
                     for (var i = 0; i < res.data.length; i++) {
 
-                        messageList.push(<Message message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
+                        messageList.push(<Message userinfo = {this.props.userinfo} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
 
                     }
                     console.log("messageList : ", messageList)

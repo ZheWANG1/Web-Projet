@@ -1,4 +1,2 @@
-{"login":"user2","password":"1","lastname":"ZENG","firstname":"Fanxiang","following":[],"followers":["user1"],"profilePhoto":"http://localhost:4000/public/images/165158-imgback1.jpg","_id":"0zsU61hIjZ6zWy52"}
-{"login":"user3","password":"1","lastname":"last","firstname":"first","following":[],"followers":[],"profilePhoto":"http://localhost:4000/public/images/165158-logo192.png","_id":"JJwoLUyTNjFPZKYQ"}
-{"login":"user1","password":"1","lastname":"Bob","firstname":"Li","following":["user2"],"followers":[],"profilePhoto":"http://localhost:4000/public/images/165158-imgback.jpg","_id":"qNGAphfL6LLO0WDd"}
-{"login":"user4","password":"1","lastname":"nn","firstname":"pp","following":[],"followers":[],"profilePhoto":"http://localhost:4000/public/images/defaultAvatar.jpg","_id":"vV2x31em9VifVLNO"}
+{"login":"Fanxiang","password":"123456","lastname":"Zeng","firstname":"Fanxiang","following":["Zhe"],"followers":["Zhe"],"profilePhoto":"http://localhost:4000/public/images/165187-external-content.duckduckgo.com.jpeg","_id":"Y5QXf6QRU585rbts"}
+{"login":"Zhe","password":"123456","lastname":"Wang","firstname":"Zhe","following":["Fanxiang"],"followers":["Fanxiang"],"profilePhoto":"http://localhost:4000/public/images/165187-Wang.jpeg","_id":"kmzEZBE57mL80at5"}

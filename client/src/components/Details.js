@@ -160,7 +160,7 @@ class Details extends Component {
                                         accept="image/jpg,image/jpeg,image/png" style={{ display: "none" }} ref={this.changeMessageImageRef}></input>
                                     <img src={photo} alt="photo" />
                                 </label>
-                                <button type="button" classname="btn" onClick={this.onSubmit}>Envoyer</button>
+                                <button type="button" classname="btn" onClick={this.onSubmit}>Comment</button>
                             </div>
                         </div>
                         <div id="zoneC">

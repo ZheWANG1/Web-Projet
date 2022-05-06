@@ -1,7 +1,7 @@
 const path = require('path');
 const api = require('./api.js');
 const apimessages = require('./apimessages.js');
-const apifriends = require('./apifriends.js')
+
 const DataStore = require('nedb')
 const cors = require('cors')
 const multer = require("multer"); // upload file
@@ -19,12 +19,12 @@ const session = require("express-session");
 const db = {};
 db.users = new DataStore({ filename: "./userData.json" });
 db.messages = new DataStore({ filename: "./messageData.json" });
-db.friends = new DataStore({ filename: "./friendData.json" });
+
 
 db.users.persistence.setAutocompactionInterval('5000')
 db.users.loadDatabase();
 db.messages.loadDatabase();
-db.friends.loadDatabase();
+
 
 app.use(cors({
     credentials: true,
@@ -90,7 +90,7 @@ app.get("/images/:image", (req, res) => {
 
 app.use('/api', api.default(db));
 app.use('/apimessages', apimessages.default(db));
-app.use('/apifriends', apifriends.default(db));
+
 
 // Démarre le serveur
 app.on('close', () => {

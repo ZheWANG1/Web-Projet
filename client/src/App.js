@@ -91,7 +91,10 @@ class App extends Component {
   setLogout = () => {
     api.delete('/user/logout').then(res => {
       this.setState({ user: "homepage", connected: "notconnected", userinfo: [] })
+      window.location.reload();
     })
+    //this.setState({ user: "homepage", connected: "notconnected", userinfo: [] })
+    
   }
 
   setLogin = () => {
