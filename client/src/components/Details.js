@@ -20,14 +20,14 @@ const apimessages = axios.create({
     headers: { 'Content-Type': 'application/json' }
 })
 
-class Homepage extends Component {
+class Details extends Component {
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this)
         this.state = {
             messages: [],
             submitImages: [],
-            nbImages: 0,
+            comments: []
         }
 
         this.changeMessageImageRef = createRef();
@@ -77,30 +77,49 @@ class Homepage extends Component {
             images: filenames
         }).then(res => {
             this.setState({ submitImages: [] })
-            console.log("file names : ", filenames)
-            //console.log(res.data);
-            window.location.reload();
+            console.log("message envoyé : ", this.state.messages[0].props.id)
+            apimessages.post('/comment/' + this.state.messages[0].props.id, {
+                comment: res.data.id
+            }).then(res => {
+                console.log("commentaire envoyé")
+                window.location.reload();
+            })
+
         }).catch(err => {
 
             console.log(filenames)
             console.log(err);
         })
 
+
+
     }
 
 
     componentDidMount() {
-        apimessages.get('/allmessage').then(res => {
+        let content = this.props.content ? this.props.content : sessionStorage.getItem('id');
+        apimessages.get('/message/' + content).then(res => {
+            console.log("message : ", res.data)
             let tmp = []
-            for (var i = 0; i < res.data.allmess.length; i++) {
-                tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} date={res.data.allmess[i].date} id={res.data.allmess[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails} ></Message>);
-            }
-            console.log("tous message ", res.data.allmess[0].message);
+            tmp.push(<Message message={res.data[0].message} user={res.data[0].login} date={res.data[0].date} id={res.data[0]._id} openProfil={this.props.openProfil}></Message>);
+            console.log("tous message ", res.data[0].message);
             this.setState({ messages: tmp })
+            tmp = [];
+            let nb = res.data[0].comments.length;
+            console.log("nb commentaire : ", nb)
+            for (var i = nb - 1; i >= 0; i--) {
+                apimessages.get('/message/' + res.data[0].comments[i]).then(res => {
+                    tmp.push(<Message message={res.data[0].message} user={res.data[0].login} date={res.data[0].date} id={res.data[0]._id} openProfil={this.props.openProfil} comment={1}></Message>);
+                    if (i <= 0) {
+                        this.setState({ comments: tmp })
+                    }
+                })
+            }
         })
+        if (this.props.content) {
+            sessionStorage.setItem('id', this.props.content);
+        }
     }
-
-
 
 
     handleChangeMessageImage = async (event) => {
@@ -118,7 +137,6 @@ class Homepage extends Component {
         formData.append('name', filename);
 
         this.state.submitImages.push(formData);
-        this.setState({ nbImages: this.state.nbImages + 1 })
 
     }
 
@@ -126,13 +144,10 @@ class Homepage extends Component {
     render() {
         return (
             <div>
-                <NavigationPannel userinfo={this.props.userinfo} researched={this.props.researched} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} openDetails={this.props.openDetails} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
-                <div>
+                <NavigationPannel userinfo={this.props.userinfo} researched={this.props.researched} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>
+                <div id="details">
                     <div id="zoneleft">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras laoreet mattis neque, vitae porta ligula semper ac. Suspendisse potenti. In vitae congue felis, venenatis eleifend ipsum. Nam at sapien sed quam semper tempor a et orci. In ullamcorper,
-                            enim ac bibendum venenatis, massa diam aliquam eros, vitae gravida odio odio sit amet mi. Maecenas enim sapien, dictum rutrum sem eget, iaculis iaculis elit. Nam mi sem, convallis at dictum in, auctor mollis quam. In sodales sapien ut
-                            eros congue vehicula. In elementum, purus ut dapibus venenatis, tellus ante vestibulum nulla, quis cursus urna nisi non ligula. In porttitor sed mauris et feugiat. Maecenas non aliquet arcu, non congue ante. Quisque pellentesque faucibus
-                            enim, id luctus lectus consequat eu.</p>
+                        <div id="zonemessage">{this.state.messages}</div>
                     </div>
                     <div id="zoneright">
                         <div id="zoneNewC" >
@@ -143,16 +158,13 @@ class Homepage extends Component {
                                 <label id="newCimage">
                                     <input type="file" id="newCimage" name="newCimage" onChange={this.handleChangeMessageImage}
                                         accept="image/jpg,image/jpeg,image/png" style={{ display: "none" }} ref={this.changeMessageImageRef}></input>
-                                    <img src={photo} alt="photo"></img>
-                                    {this.state.nbImages}  
+                                    <img src={photo} alt="photo" />
                                 </label>
-                                
-                                
                                 <button type="button" classname="btn" onClick={this.onSubmit}>Envoyer</button>
                             </div>
                         </div>
                         <div id="zoneC">
-                            <div id="zonemessage">{this.state.messages}</div>
+                            <div id="zonemessage">{this.state.comments}</div>
                         </div>
                     </div>
                 </div>
@@ -161,4 +173,4 @@ class Homepage extends Component {
     }
 }
 
-export default Homepage;
+export default Details;

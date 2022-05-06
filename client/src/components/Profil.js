@@ -63,7 +63,7 @@ class Profil extends Component {
                 let tmp = []
                 for (var i = 0; i < res.data.length; i++) {
 
-                    tmp.push(<Message profilePhoto={this.state.profil[0].profilePhoto} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
+                    tmp.push(<Message profilePhoto={this.state.profil[0].profilePhoto} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails}></Message>);
 
                 }
                 this.setState({ messages: tmp })

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css';
 import axios from 'axios';
+import comment from './comment.png';
+import Details from './Details';
 
 import { Link } from 'react-router-dom';
 
@@ -28,7 +30,8 @@ class Message extends Component {
             date: "",
             id: "",
             ProfilePhoto: "",
-            photo: []
+            photo: [],
+            nbcomments: 0,
         }
         this.deleteMessage = this.deleteMessage.bind(this);
     }
@@ -52,7 +55,7 @@ class Message extends Component {
         })
 
         apimessages.get('/message/' + this.props.id).then(res => {
-            this.setState({ photo: res.data[0].images })
+            this.setState({ photo: res.data[0].images, nbcomments : res.data[0].comments.length })
             console.log("photo : ", this.state.photo)
         })
     }
@@ -66,12 +69,12 @@ class Message extends Component {
 
     render() {
         return (
-            <div class="commentaire">
+            <div id="commentaire">
                 <Link to="/profil">
-                    <img id="commentaire_profilphoto" onClick={() => { this.props.openProfil(this.state.user) }} src={this.state.ProfilePhoto} ></img>
+                    <img id="commentaire_profilphoto" alt="profil" onClick={() => { this.props.openProfil(this.state.user) }} src={this.state.ProfilePhoto} ></img>
                     <h4 id="username" onClick={() => { this.props.openProfil(this.state.user) }} >{this.state.user}</h4>
                 </Link>
-                {this.props.delete == 1 ?
+                {this.props.delete === 1 ?
                     <div id="deletebutton" onClick={() => { this.deleteMessage(); window.location.reload() }}>
                         <h4 id="delete">X</h4>
                     </div> : <p></p>}
@@ -81,14 +84,20 @@ class Message extends Component {
                 <div id="commentaire_images">
                     {this.state.photo.map((photo, index) => {
                         return (
-                            <img src={photo}></img>
+                            <img src={photo} alt="message"></img>
                         )
                     })}
                 </div>
+                {this.props.comment === 1 ? <p></p> :
+                    <div id="commentaire_comment">
+                        <Link to="/details">
+                            <img id="commentaire_comment_img" src={comment} alt="comment" onClick={() => { this.props.openDetails(this.state.id) }}></img>
+                            {this.state.nbcomments}
+                        </Link>
+                    </div>}
             </div>
         )
     }
-
 }
 
 export default Message;

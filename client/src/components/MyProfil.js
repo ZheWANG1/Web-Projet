@@ -67,7 +67,7 @@ class MyProfil extends Component {
             let tmp = []
             for (var i = 0; i < res.data.length; i++) {
 
-                tmp.push(<Message profilePhoto={this.state.userinfo[0].profilePhoto} delete={1} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
+                tmp.push(<Message profilePhoto={this.state.userinfo[0].profilePhoto} delete={1} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails}></Message>);
 
             }
             this.setState({ messages: tmp })
@@ -79,7 +79,7 @@ class MyProfil extends Component {
         let userList = []
         console.log("following : ", this.state.userinfo[0].following);
         for (var i = 0; i < this.state.userinfo[0].following.length; i++) {
-            userList.push(<User login={this.state.userinfo[0].following[i]} openProfil={this.props.openProfil}></User>);
+            userList.push(<User login={this.state.userinfo[0].following[i]} openProfil={this.props.openProfil} ></User>);
         }
         this.props.setResearch(userList);
         this.setState({ researched: true })

@@ -55,7 +55,6 @@ class NavigationPannel extends Component {
             )
         } else {
             if (this.props.connected == "connected") {
-                console.log("profile photo : ", this.props.userinfo[0]);
                 return (
                     <div>
 

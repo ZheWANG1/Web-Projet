@@ -93,9 +93,13 @@ class Message {
         })
     }
 
-
-
-
+    async addComment(id, comment) {
+        return new Promise((resolve, reject) => {
+            this.db.messages.update({ _id: id }, { $push: { comments: comment } }, function (err, docs) {
+                resolve()
+            });
+        })
+    }
 
 }
 

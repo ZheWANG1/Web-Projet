@@ -20,7 +20,7 @@ function init(db) {
     // createMessage
     router.post("/message", async (req, res) => {
 
-        const { message , images } = req.body;
+        const { message, images } = req.body;
         if (!message) {
             res.status(400).send("Missing fields");
         } else if (!req.session.username) {
@@ -28,7 +28,7 @@ function init(db) {
         } else {
             console.log(req.session.username)
             console.log(req.body);
-            messages.create(message, req.session.username , images)
+            messages.create(message, req.session.username, images)
                 .then((message_id) => res.status(201).send({ id: message_id }))
                 .catch((err) => res.status(500).send(err));
         }
@@ -58,7 +58,7 @@ function init(db) {
         }
     });
 
-    
+
     //avoir ses propre message
     router.get("/getSelfMessage", async (req, res) => {
         //const { login } = req.params.login;
@@ -86,7 +86,7 @@ function init(db) {
 
     //get message by id
     router.get("/message/:id", async (req, res) => {
-        try{
+        try {
             console.log("id", req.params.id)
             const { id } = req.params;
             if (!id) {
@@ -105,7 +105,7 @@ function init(db) {
                     res.status(500).send(e)
                 }
             }
-        }catch(e){
+        } catch (e) {
             console.log(e);
             res.status(500).send(e)
         }
@@ -129,7 +129,7 @@ function init(db) {
     })
     //find message with content
     router.get("/findmessage", async (req, res) => {
-        let {content} = req.query
+        let { content } = req.query
         console.log(req.body)
         console.log(content);
         try {
@@ -149,37 +149,34 @@ function init(db) {
             if (!id) {
                 res.status(505).send("message doesn't exist");
             } else {
-                
+
                 let num = await messages.delete(id);
-                console.log("nbmessage deleted"+num);
-                res.status(200).send(num+ "message deleted");
+                console.log("nbmessage deleted" + num);
+                res.status(200).send(num + "message deleted");
             }
         } catch (e) {
             res.status(500).send(e, " internal server error");
         }
 
     })
-    // router.post("/user/:user_id(\\d+)/message", (req, res) => {
-    //     const { user_id } = req.params.user_id;
-    //     const { message } = req.body;
-    //     if (!message) {
-    //         res.status(400).send("Missing fields");
-    //     } else {
-    //         users.addMessage(user_id, message)
-    //             .then(() => res.sendStatus(201))
-    //             .catch((err) => res.status(500).send(err));
-    //     }
-    // });
-
-    // router.post("user/user_id/message", async (req, res) => {
-    //     let tab = []
-    //     const user = await users.get(req.params.user_id);
-    //     var message = req.body;
-    //     tab.push(message)
-    //     res.send(message)
 
 
-    // });
+    router.post("/comment/:id", async (req, res) => {
+        const { id } = req.params;
+        const { comment } = req.body;
+        if (!id) {
+            res.status(400).send("Missing fields");
+        } else if (!comment) {
+            res.status(400).send("Missing fields");
+        } else {
+            try {
+                await messages.addComment(id, comment);
+                res.status(201).send("comment added");
+            } catch (e) {
+                res.status(500).send(e);
+            }
+        }
+    });
 
     return router;
 }
