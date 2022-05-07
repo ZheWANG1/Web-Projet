@@ -45,7 +45,6 @@ class User extends Component {
     }
 
     render() {
-        console.log("--------------------------" ,this.props.userinfo)
         return (
             <div id="commentaire">
                 

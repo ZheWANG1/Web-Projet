@@ -56,7 +56,6 @@ class Message extends Component {
 
         apimessages.get('/message/' + this.props.id).then(res => {
             this.setState({ photo: res.data[0].images, nbcomments : res.data[0].comments.length })
-            console.log("photo : ", this.state.photo)
         })
     }
 
@@ -68,12 +67,9 @@ class Message extends Component {
 
 
     render() {
-        console.log("++++++++++++++++ " , this.props.userinfo)
         return (
-           
             <div id="commentaire">
-
-                {!this.props.userinfo  ||this.props.userinfo.length === 0  ? <Link to="/login">
+                {!sessionStorage.getItem('userinfo')  ? <Link to="/login">
                     <img id="commentaire_profilphoto" alt="profil" onClick={() => { this.props.openProfil(this.state.user) }} src={this.state.ProfilePhoto} ></img>
                     <h4 id="username" onClick={() => { this.props.openProfil(this.state.user) }} >{this.state.user}</h4>
                 </Link> :
@@ -86,12 +82,12 @@ class Message extends Component {
                         <h4 id="delete">X</h4>
                     </div> : <p></p>}
 
-                <date>{this.state.date}</date>
+                <p id="date">{this.state.date}</p>
                 <p>{this.state.message}</p>
                 <div id="commentaire_images">
                     {this.state.photo.map((photo, index) => {
                         return (
-                            <img src={photo} alt="message"></img>
+                            <img src={photo} alt="message" key={index}></img>
                         )
                     })}
                 </div>

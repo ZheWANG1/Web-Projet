@@ -31,15 +31,6 @@ class Details extends Component {
         }
 
         this.changeMessageImageRef = createRef();
-
-        // apimessages.get('/allmessage').then(res => {
-        //     let tmp = []
-        //     for (var i = 0; i < res.data.length; i++) {
-        //         tmp.push(<Message message={res.data.allmess[i].message} user={res.data.allmess[i].login} id={res.data.allmess[i]._id}></Message>);
-        //     }
-        //     this.state.messages = tmp;
-
-        // });
     }
 
     onSubmit(event) {
@@ -101,7 +92,7 @@ class Details extends Component {
         apimessages.get('/message/' + content).then(res => {
             console.log("message : ", res.data)
             let tmp = []
-            tmp.push(<Message message={res.data[0].message} user={res.data[0].login} date={res.data[0].date} id={res.data[0]._id} openProfil={this.props.openProfil}></Message>);
+            tmp.push(<Message key={res.data[0]._id} message={res.data[0].message} user={res.data[0].login} date={res.data[0].date} id={res.data[0]._id} openProfil={this.props.openProfil}></Message>);
             console.log("tous message ", res.data[0].message);
             this.setState({ messages: tmp })
             tmp = [];
@@ -109,7 +100,7 @@ class Details extends Component {
             console.log("nb commentaire : ", nb)
             for (var i = nb - 1; i >= 0; i--) {
                 apimessages.get('/message/' + res.data[0].comments[i]).then(res => {
-                    tmp.push(<Message message={res.data[0].message} user={res.data[0].login} date={res.data[0].date} id={res.data[0]._id} openProfil={this.props.openProfil} comment={1}></Message>);
+                    tmp.push(<Message key={res.data[0]._id} message={res.data[0].message} user={res.data[0].login} date={res.data[0].date} id={res.data[0]._id} openProfil={this.props.openProfil} comment={1}></Message>);
                     if (i <= 0) {
                         this.setState({ comments: tmp })
                     }
@@ -160,7 +151,7 @@ class Details extends Component {
                                         accept="image/jpg,image/jpeg,image/png" style={{ display: "none" }} ref={this.changeMessageImageRef}></input>
                                     <img src={photo} alt="photo" />
                                 </label>
-                                <button type="button" classname="btn" onClick={this.onSubmit}>Comment</button>
+                                <button type="button" onClick={this.onSubmit}>Comment</button>
                             </div>
                         </div>
                         <div id="zoneC">

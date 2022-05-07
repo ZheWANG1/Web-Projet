@@ -56,6 +56,7 @@ class App extends Component {
     this.setlogout = this.setLogout.bind(this);
     this.changetab = this.changetab.bind(this);
     this.setlogin = this.setLogin.bind(this);
+    this.sethomepage = this.setHomepage.bind(this);
     this.openprofil = this.openProfil.bind(this);
     this.opendetails = this.openDetails.bind(this);
     this.setconnexionstate = this.setConnexionState.bind(this);
@@ -152,15 +153,15 @@ class App extends Component {
           </Route>
           <Route path="/login" element={<Login userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setHomepage={this.setHomepage} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
           </Route>
-          <Route path="/signup" element={<Signup userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setConnexionState={this.setConnexionState} connected={this.state.connected} />}>
+          <Route path="/signup" element={<Signup userinfo={this.state.userinfo} getUserInfo={this.getUserInfo} setConnexionState={this.setConnexionState} connected={this.state.connected} setHomepage={this.setHomepage}/>}>
           </Route>
-          <Route path="/homepage" element={<Homepage userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} openDetails={this.openDetails} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
+          <Route path="/homepage" element={<Homepage userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} openDetails={this.openDetails} setHomepage={this.setHomepage} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Homepage>}>
           </Route>
           <Route path="/profil" element={<Profil content={this.state.profil} userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} openDetails={this.openDetails} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></Profil>}>
           </Route>
           <Route path="/myprofil" element={<MyProfil userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} content={this.state.profil} getUserInfo={this.getUserInfo} openProfil={this.openProfil} openDetails={this.openDetails} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></MyProfil>}>
           </Route>
-          <Route path="/resultpage" element={<ResultPage userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} openProfil={this.openProfil} openDetails={this.openDetails} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></ResultPage>}>
+          <Route path="/resultpage" element={<ResultPage userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} openDetails={this.openDetails} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}></ResultPage>}>
           </Route>
           <Route path="/details" element={<Details content={this.state.details} userinfo={this.state.userinfo} changeProfilePhotoRef={this.changeProfilePhotoRef} researched={this.state.researched} setResearch={this.setResearch} getUserInfo={this.getUserInfo} openProfil={this.openProfil} openDetails={this.openDetails} setLogin={this.setLogin} setSignup={this.setSignup} setLogout={this.setLogout} connected={this.state.connected}>{this.changetab()}</Details>}>
           </Route>

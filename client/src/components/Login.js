@@ -25,10 +25,10 @@ class Login extends Component {
                 password: event.target.password.value
             })
             .then(res => {
-                console.log(res);
                 console.log(res.data);
                 this.props.setConnexionState("connected");
                 this.props.getUserInfo();
+                sessionStorage.setItem('userinfo', res.data.test);
             })
             .catch(err => {
                 alert(err.response.data.message);
@@ -47,11 +47,11 @@ class Login extends Component {
                     <input type="password" id="password" name="password" placeholder="Password"></input>
                     <br></br>
 
-                    <button type="submit" id="connexion" class="btn">Connexion</button>
+                    <button type="submit" id="connexion">Connexion</button>
 
                     {this.props.connected == "connected" && <Navigate to="/"></Navigate>}
                     <Link to="/">
-                        <button type="button" id="annuler" class="btn" onClick={() => this.props.setHomepage()}> Annuler</button>
+                        <button type="button" id="annuler" onClick={() => this.props.setHomepage()}> Annuler</button>
                     </Link>
                 </form>
             </div>

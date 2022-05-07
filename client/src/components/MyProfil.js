@@ -24,8 +24,6 @@ class MyProfil extends Component {
     constructor(props) {
         super(props);
 
-        //console.log(this.props.openProfil);
-
         this.friendList = [1, 2, 4, 5];
         this.state = {
             userinfo: props.userinfo[0] ? props.userinfo : [{ "login": "login" }],
@@ -42,7 +40,6 @@ class MyProfil extends Component {
             this.state.userinfo = res.data;
         })
 
-        console.log("content : ", this.state.content)
         api.get('/user/getUser', {
 
             params: {
@@ -50,25 +47,23 @@ class MyProfil extends Component {
                 login: this.state.content
             }
         }).then(res => {
-            console.log("content : ", this.state.content)
             this.state.profil = res.data
 
             if (this.state.content === "" || this.state.profil === [] || this.state.profil[0].login === this.state.userinfo[0].login) {
-                console.log("on est sur notre profil")
-                this.state.profil = this.state.userinfo
-                console.log("profil : ", this.state.profil)
-                console.log("self : ", this.state.userinfo)
+                this.state.profil = this.state.userinfo;
             }
 
         })
 
 
+        
+    }
+
+    componentDidMount() {
         apimessages.get('/getSelfMessage').then(res => {
             let tmp = []
             for (var i = 0; i < res.data.length; i++) {
-
-                tmp.push(<Message profilePhoto={this.state.userinfo[0].profilePhoto} delete={1} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails}></Message>);
-
+                tmp.push(<Message key={res.data[i]._id} profilePhoto={this.state.userinfo[0].profilePhoto} delete={1} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails}></Message>);
             }
             this.setState({ messages: tmp })
         });

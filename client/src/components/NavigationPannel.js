@@ -34,18 +34,16 @@ class NavigationPannel extends Component {
 
         this.onSubmit = this.onSubmit.bind(this);
         this.changeConnect = this.changeConnect.bind(this);
+        this.isresearched = this.isresearched.bind(this);
 
     }
 
     changeConnect() {
         if (this.props.connected == "notconnected") {
-            console.log("profile photo : ", `${PF}defaultAvatar.jpg`);
             return (
                 <div>
-
-                    
                     <Link to="/login">
-                    <img id="profilephoto" onClick={this.props.setLogin} src={`${PF}defaultAvatar.jpg`} ></img>
+                        <img id="profilephoto" onClick={this.props.setLogin} src={`${PF}defaultAvatar.jpg`} ></img>
                         <button type="button" onClick={this.props.setLogin}>Log in</button>
                     </Link>
                     <Link to="/signup">
@@ -57,14 +55,11 @@ class NavigationPannel extends Component {
             if (this.props.connected == "connected") {
                 return (
                     <div>
-
                         <Link to="/myprofil">
-                        <img id="profilephoto" onClick={() => { this.props.getUserInfo(); this.props.openProfil(""); console.log("reaction") }} src={this.props.userinfo[0] ? this.props.userinfo[0].profilePhoto : ""}></img>
-
-                            {/* <button type="button" onClick={() => { this.props.getUserInfo(); this.props.openProfil(""); console.log("reaction") }}>Profile</button> */}
+                            <img id="profilephoto" onClick={() => { this.props.getUserInfo(); this.props.openProfil("") }} src={this.props.userinfo[0] ? this.props.userinfo[0].profilePhoto : ""}></img>
                         </Link>
                         <Link to="/Homepage">
-                            <button type="button" onClick={() => { this.props.setLogout() }}>Log out</button>
+                            <button type="button" onClick={() => { sessionStorage.clear(); this.props.setLogout() }}>Log out</button>
                         </Link>
                     </div>
                 )
@@ -83,20 +78,14 @@ class NavigationPannel extends Component {
                     content: event.target.rbar.value
                 }
             })
-
-                //api.get(`/user/getUser/:${event.target.rbar.value}`)
                 .then(res => {
-                    //console.log(res.data)
                     if (res.data === []) {
                         alert("no such user check your spelling")
                     } else {
-                        //console.log(res.data)
                         console.log(this.props)
                         let userList = []
                         for (var i = 0; i < res.data.length; i++) {
-
-                            userList.push(<User userinfo = {this.props.userinfo} login={res.data[i].login} openProfil={this.props.openProfil}></User>);
-
+                            userList.push(<User key={res.data[i].login} userinfo={this.props.userinfo} login={res.data[i].login} openProfil={this.props.openProfil}></User>);
                         }
                         this.props.setResearch(userList);
                         this.setState({ researched: userList });
@@ -120,13 +109,12 @@ class NavigationPannel extends Component {
                 if (res.data === []) {
                     alert("no such message")
                 } else {
-                    //console.log(res.data)
                     console.log(this.props)
 
                     let messageList = []
                     for (var i = 0; i < res.data.length; i++) {
 
-                        messageList.push(<Message userinfo = {this.props.userinfo} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
+                        messageList.push(<Message key={res.data[i]} userinfo={this.props.userinfo} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil}></Message>);
 
                     }
                     console.log("messageList : ", messageList)
@@ -150,11 +138,18 @@ class NavigationPannel extends Component {
             console.log("err: ", err)
         }
     }
+
+    isresearched() {
+        if (this.state.researched) {
+            this.setState({ researched: undefined })
+            return <Navigate to="/resultpage" />
+        }
+    }
+
     render() {
         return (
             <div>
-
-                {this.state.researched && !this.setState({ researched: undefined }) && <Navigate to="/resultpage"></Navigate>}
+                {this.isresearched()}
                 <header id="homepage-header">
                     <div id="divlogo">
                         <Link to="/Homepage">

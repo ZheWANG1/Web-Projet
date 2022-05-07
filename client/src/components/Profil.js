@@ -37,6 +37,13 @@ class Profil extends Component {
         };
 
 
+        
+    }
+
+    componentDidMount() {
+        let content = this.props.content&&this.props.content!="" ? this.props.content : sessionStorage.getItem('profil');
+        this.setState({ content: content })
+
         api.get('/user/self').then(res => {
             this.state.userinfo = res.data;
         })
@@ -45,10 +52,10 @@ class Profil extends Component {
 
             params: {
 
-                login: this.state.content
+                login: content
             }
         }).then(res => {
-            console.log("content ", this.state.content);
+            console.log("content ", content);
             this.state.profil = res.data
 
 
@@ -63,12 +70,15 @@ class Profil extends Component {
                 let tmp = []
                 for (var i = 0; i < res.data.length; i++) {
 
-                    tmp.push(<Message profilePhoto={this.state.profil[0].profilePhoto} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails}></Message>);
+                    tmp.push(<Message key={res.data[i]._id} profilePhoto={this.state.profil[0].profilePhoto} message={res.data[i].message} user={res.data[i].login} date={res.data[i].date} id={res.data[i]._id} openProfil={this.props.openProfil} openDetails={this.props.openDetails}></Message>);
 
                 }
                 this.setState({ messages: tmp })
             })
         })
+        if (this.props.content) {
+            sessionStorage.setItem('profil', this.props.content);
+        }
     }
 
 
@@ -113,12 +123,8 @@ class Profil extends Component {
     }
 
     render() {
-        while (!this.state.userinfo){
-            window.location.reload()
-        }
         return (
             <div>
-                {/* {this.props.connected == "notconnected" && <Navigate to="/login"></Navigate>} */}
                 < NavigationPannel userinfo={this.props.userinfo} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected} ></NavigationPannel >
                 <div>
                     <div id="zoneleft">

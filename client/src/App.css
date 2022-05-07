@@ -161,6 +161,18 @@ h4 {
   padding-top: 15px;
 }
 
+#zoneleft {
+  padding: 0px;
+  width: 23%;
+}
+
+#zoneleft_img{
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  margin : 0;
+}
+
 #details #zoneright{
   width: 60%;
   display: inline-block;
@@ -217,7 +229,7 @@ h4 {
   margin-top: 10px;
 }
 
-#commentaire date {
+#commentaire #date {
   width: 20%;
   float: right;
   font-style: italic;
@@ -387,6 +399,8 @@ h4 {
 #follower h4 {
   margin-top: 5px;
 }
+
+
 
 
 @keyframes App-logo-spin {

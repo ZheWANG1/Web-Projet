@@ -19,46 +19,47 @@ class Signup extends Component {
     onSubmit(event) {
         event.preventDefault();
         //this.props.setConnexionState("connected");
+        if (event.target.password.value.length < 6) {
+            alert("Veuillez entrer un mot de passe de 6 caractères minimum");
+        } else {
 
-        if(event.target.password.value == event.target.confirmpassword.value ){
-            
-        
-            api.post('/user',
-                {
-                    login: event.target.login.value,
-                    password: event.target.password.value,
-                    lastname: event.target.nom.value,
-                    firstname: event.target.prenom.value
-                    // confirmpassword: event.target.confirmpassword.value
-                })
-                .then(res => {
-                    console.log(res)
-                    console.log(res.data)
-                    api.post('/user/login',
-                        {
-                            login: event.target.login.value,
-                            password: event.target.password.value
-                        })
-                        .then(res => {
-                            console.log(res);
-                            console.log(res.data);
-                            console.log(this.props.connected);
-                            this.props.setConnexionState("connected");
-                            this.props.getUserInfo();
-
-                        })
-                        .catch(err => {
-                            this.props.setConnexionState("notconnected");
-                            alert(err.response.data.message);
-                            console.log(err);
-                        })
-                })
-                .catch(err => {
-                    console.log(err)
-                    alert(err.response.data.message);
-                })
-        }else{
-            alert("please enter the confirm with the same password")
+            if (event.target.password.value == event.target.confirmpassword.value) {
+                api.post('/user',
+                    {
+                        login: event.target.login.value,
+                        password: event.target.password.value,
+                        lastname: event.target.nom.value,
+                        firstname: event.target.prenom.value
+                    })
+                    .then(res => {
+                        console.log(res)
+                        console.log(res.data)
+                        api.post('/user/login',
+                            {
+                                login: event.target.login.value,
+                                password: event.target.password.value
+                            })
+                            .then(res => {
+                                console.log(res);
+                                console.log(res.data);
+                                console.log(this.props.connected);
+                                this.props.setConnexionState("connected");
+                                this.props.getUserInfo();
+                                sessionStorage.setItem('userinfo', res.data.test);
+                            })
+                            .catch(err => {
+                                this.props.setConnexionState("notconnected");
+                                alert(err.response.data.message);
+                                console.log(err);
+                            })
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        alert(err.response.data.message);
+                    })
+            } else {
+                alert("Les mots de passe ne sont pas identiques");
+            }
         }
     }
 
@@ -75,10 +76,10 @@ class Signup extends Component {
                     <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm password"></input>
 
                     <br></br>
-                    <button type="submit" id="connexion" class="btn">Connexion</button>
+                    <button type="submit" id="connexion">Connexion</button>
                     {this.props.connected == "connected" && <Navigate to="/"></Navigate>}
                     <Link to="/">
-                        <button type="button" onClick={() => this.props.setHomepage()} id="annuler" class="btn">Annuler</button>
+                        <button type="button" onClick={() => this.props.setHomepage()} id="annuler">Annuler</button>
                     </Link>
 
                 </form>
