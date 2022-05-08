@@ -1,6 +1,7 @@
 # Rapport Technologie Web
 ### ZENG Fanxiang 28600693
 ### WANG Zhe 2116827
+### lien vidéo : https://youtu.be/2x6mGklPiDo
 
 ### 1. Répartition du travail
 Dans le cas de notre binôme le travail était très bien répartis. Fanxiang travaillait plus dans le côté serveur, avec l'implémentation des API et effectué les requêtes BD nécessaires pour une bonne interaction client-serveur. Zhe de son côté crée les pages et  les components besoin du côté client avec les codes html et css écrite entièrement à la main. Du coup, Fanxiang faisait principalement le parti serveur, Zhe le client  et les partis où on avait besoin de faire la liaison client-serveur on était toujours à deux dessus, pour faire les fonctions nécessire. Nous deux a trouvé que c'était un plaisir de travailler avec l'autre en tant que binome, on arrivait toujours à trouvé un temps pour travailler ensemble, et dans le cas ou l'un de nous deux rencontre un problème on se met à deux dessus pour résoudre. Cela fait que tous les deux connaissent bien le projet dans sa totalité.
