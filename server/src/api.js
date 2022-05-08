@@ -138,7 +138,7 @@ function init(db) {
 
     //getUser
     router
-        .route("/user/getUser/") //.route("/user/getUser/:login)
+        .route("/user/getUser")
         .get(async (req, res) => {
             try {
                 console.log("params", req.params);
@@ -193,7 +193,7 @@ function init(db) {
             res.send(500).json({ message: "internal server error , unknown" })
         }
     })
-    
+
     //follow 
     router.post("/user/self/follow", async (req, res) => {
         try {
@@ -232,15 +232,15 @@ function init(db) {
             if (!Flogin) {
                 res.status(502).send("missing body");
             } else {
-                if(!req.session){
+                if (!req.session) {
                     res.status(503).send("your are not connected")
-                }else{
+                } else {
                     const tmp = await users.get(req.session.username)
                     console.log(Flogin)
                     await users.unfollow(req.session.username, Flogin);
                     res.status(200).send("unfollowed");
                 }
-                
+
             }
 
 
@@ -251,27 +251,15 @@ function init(db) {
     })
 
     router.post("/user/self/updateProfileImage", async (req, res) => {
-        try{
-            console.log("body : " , req.body)
-            users.updateProfileImage(req.session.username , req.body.filename)
+        try {
+            console.log("body : ", req.body)
+            users.updateProfileImage(req.session.username, req.body.filename)
             res.sendStatus(200);
-            
-        }catch(e){
+
+        } catch (e) {
             res.status(500).send("internal server error , unknown")
         }
     })
-
-
-
-
-
-
-
-
-
-
-
-
 
     return router;
 }

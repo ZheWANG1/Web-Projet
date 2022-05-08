@@ -167,7 +167,7 @@ function init(db) {
         if (!id) {
             res.status(400).send("Missing fields");
         } else if (!comment) {
-            res.status(400).send("Missing fields");
+            res.status(401).send("Missing fields");
         } else {
             try {
                 await messages.addComment(id, comment);
