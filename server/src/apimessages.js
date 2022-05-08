@@ -110,7 +110,7 @@ function init(db) {
             res.status(500).send(e)
         }
     })
-
+    
     router.get("/allmessage", async (req, res) => {
         try {
             allmess = await messages.getAllMessage();
