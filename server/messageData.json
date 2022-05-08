@@ -1,14 +1,2 @@
 {"message":"en cliquant sur mon username ou sur mon photo de profil, tu peux aller sur ma page profil","login":"Fanxiang","date":1651873568805,"comments":[],"images":[],"_id":"6I7eKQNuCXPxdaxv"}
 {"message":"en cliquant sur le commentaire  à droite on verra tous les commentaire sur ce message","login":"Zhe","date":1651873887771,"comments":[],"images":[],"_id":"N3msENeLfzdqw9tl"}
-{"message":"test","login":"Fanxiang","date":1651958191767,"comments":[],"images":[],"_id":"eqZyI9pY2ek8Ab0K"}
-{"$$deleted":true,"_id":"eqZyI9pY2ek8Ab0K"}
-{"message":"picture test","login":"Fanxiang","date":1651958392587,"comments":[],"images":["http://localhost:4000/images/165195-1.jpg","http://localhost:4000/images/165195-2.jpg"],"_id":"X1O07pnoKnaG8PVJ"}
-{"message":"on poste une message","login":"Fanxiang","date":1651961888358,"comments":[],"images":[],"_id":"hv4VKBzk70dFhZOW"}
-{"$$deleted":true,"_id":"hv4VKBzk70dFhZOW"}
-{"message":"c'est beau cette image","login":"Fanxiang","date":1651962364449,"comments":[],"images":[],"_id":"0ncQz6xJEkPnkFHh"}
-{"message":"picture test","login":"Fanxiang","date":1651958392587,"comments":["0ncQz6xJEkPnkFHh"],"images":["http://localhost:4000/images/165195-1.jpg","http://localhost:4000/images/165195-2.jpg"],"_id":"X1O07pnoKnaG8PVJ"}
-{"message":"plusieurs images","login":"Fanxiang","date":1651962417186,"comments":[],"images":["http://localhost:4000/images/165196-1.jpg","http://localhost:4000/images/165196-3.jpg","http://localhost:4000/images/165196-4.jpg"],"_id":"4Fgi5XQA6I4kpCHF"}
-{"message":"picture test","login":"Fanxiang","date":1651958392587,"comments":["0ncQz6xJEkPnkFHh","4Fgi5XQA6I4kpCHF"],"images":["http://localhost:4000/images/165195-1.jpg","http://localhost:4000/images/165195-2.jpg"],"_id":"X1O07pnoKnaG8PVJ"}
-{"$$deleted":true,"_id":"0ncQz6xJEkPnkFHh"}
-{"$$deleted":true,"_id":"4Fgi5XQA6I4kpCHF"}
-{"$$deleted":true,"_id":"X1O07pnoKnaG8PVJ"}

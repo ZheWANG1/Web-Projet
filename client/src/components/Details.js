@@ -27,7 +27,8 @@ class Details extends Component {
         this.state = {
             messages: [],
             submitImages: [],
-            comments: []
+            comments: [],
+            nbImages: 0,
         }
 
         this.changeMessageImageRef = createRef();
@@ -128,6 +129,7 @@ class Details extends Component {
         formData.append('name', filename);
 
         this.state.submitImages.push(formData);
+        this.setState({ nbImages: this.state.nbImages + 1 })
 
     }
 
@@ -150,6 +152,7 @@ class Details extends Component {
                                     <input type="file" id="newCimage" name="newCimage" onChange={this.handleChangeMessageImage}
                                         accept="image/jpg,image/jpeg,image/png" style={{ display: "none" }} ref={this.changeMessageImageRef}></input>
                                     <img src={photo} alt="photo" />
+                                    {this.state.nbImages}
                                 </label>
                                 <button type="button" onClick={this.onSubmit}>Comment</button>
                             </div>

@@ -42,7 +42,6 @@ class Signup extends Component {
                             .then(res => {
                                 console.log(res);
                                 console.log(res.data);
-                                console.log(this.props.connected);
                                 this.props.setConnexionState("connected");
                                 this.props.getUserInfo();
                                 sessionStorage.setItem('userinfo', res.data.test);
