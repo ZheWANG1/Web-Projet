@@ -183,16 +183,7 @@ function init(db) {
             });
         });
 
-    //follow
-    router.post("/user/follow", async (req, res) => {
-        try {
-            const { mylogin, followinglogin } = req.body;
-            await users.follow(mylogin, followinglogin);
-            res.status(200).send({ status: 200, message: "follow success" })
-        } catch (e) {
-            res.send(500).json({ message: "internal server error , unknown" })
-        }
-    })
+    
 
     //follow 
     router.post("/user/self/follow", async (req, res) => {

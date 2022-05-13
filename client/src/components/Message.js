@@ -62,6 +62,7 @@ class Message extends Component {
     deleteMessage() {
         apimessages.delete(`/${this.state.id}`).then(res => {
             console.log("delete message : ", res.data);
+            window.location.reload();
         })
     }
 
@@ -78,7 +79,7 @@ class Message extends Component {
                     <h4 id="username" onClick={() => { this.props.openProfil(this.state.user) }} >{this.state.user}</h4>
                 </Link>}
                 {this.props.delete === 1 ?
-                    <div id="deletebutton" onClick={() => { this.deleteMessage(); window.location.reload() }}>
+                    <div id="deletebutton" onClick={() => { this.deleteMessage(); console.log(this.state.id);  }}>
                         <h4 id="delete">X</h4>
                     </div> : <p></p>}
 

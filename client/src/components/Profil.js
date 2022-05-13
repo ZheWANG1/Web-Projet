@@ -45,7 +45,7 @@ class Profil extends Component {
         this.setState({ content: content })
 
         api.get('/user/self').then(res => {
-            this.state.userinfo = res.data;
+            this.setState({ userinfo: res.data })
         })
 
         api.get('/user/getUser', {
@@ -60,7 +60,8 @@ class Profil extends Component {
 
 
             if (this.state.content === "" || this.state.profil === [] || this.state.profil[0].login === this.state.userinfo[0].login) {
-                this.state.profil = this.state.userinfo
+                
+                this.setState({profil : this.state.userinfo})
             }
             //console.log("profil : ", this.state.profil);
             this.setState({ nbFollowing: res.data[0].following.length })
@@ -86,7 +87,7 @@ class Profil extends Component {
         let userList = []
         console.log("following : ", this.state.profil[0].following);
         for (var i = 0; i < this.state.profil[0].following.length; i++) {
-            userList.push(<User login={this.state.profil[0].following[i]} openProfil={this.props.openProfil}></User>);
+            userList.push(<User userinfo = {this.state.profil} login={this.state.profil[0].following[i]} openProfil={this.props.openProfil}></User>);
         }
         this.props.setResearch(userList);
         this.setState({ researched: true })
@@ -96,7 +97,7 @@ class Profil extends Component {
     toFollowerResult = () => {
         let userList = []
         for (var i = 0; i < this.state.profil[0].followers.length; i++) {
-            userList.push(<User login={this.state.profil[0].followers[i]} openProfil={this.props.openProfil}></User>);
+            userList.push(<User userinfo = {this.state.profil} login={this.state.profil[0].followers[i]} openProfil={this.props.openProfil}></User>);
         }
         this.props.setResearch(userList);
         this.setState({ researched: true })

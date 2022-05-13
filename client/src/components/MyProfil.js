@@ -29,37 +29,31 @@ class MyProfil extends Component {
             userinfo: props.userinfo[0] ? props.userinfo : [{ "login": "login" }],
             messages: [],
             content: props.content ? props.content : "",
-            profil: [{ "login": "login" }],
+            profil: [{ "login": "login" , "profilePhoto": ""}],
             researched: undefined
         };
 
         this.changeProfilePhotoRef = createRef();
 
 
-        api.get('/user/self').then(res => {
-            this.state.userinfo = res.data;
-        })
-
-        api.get('/user/getUser', {
-
-            params: {
-
-                login: this.state.content
-            }
-        }).then(res => {
-            this.state.profil = res.data
-
-            if (this.state.content === "" || this.state.profil === [] || this.state.profil[0].login === this.state.userinfo[0].login) {
-                this.state.profil = this.state.userinfo;
-            }
-
-        })
+        
 
 
         
     }
 
     componentDidMount() {
+        let content = this.props.content&&this.props.content!="" ? this.props.content : sessionStorage.getItem('myprofil');
+        
+
+        api.get('/user/self').then(res => {
+            //this.state.userinfo = res.data;
+            this.setState({ userinfo: res.data });
+            this.setState({ profil: res.data });
+        })
+
+        
+
         apimessages.get('/getSelfMessage').then(res => {
             let tmp = []
             for (var i = 0; i < res.data.length; i++) {
@@ -67,6 +61,10 @@ class MyProfil extends Component {
             }
             this.setState({ messages: tmp })
         });
+
+        if (this.props.content) {
+            sessionStorage.setItem('myprofil', this.props.content);
+        }
     }
 
 
@@ -74,7 +72,7 @@ class MyProfil extends Component {
         let userList = []
         console.log("following : ", this.state.userinfo[0].following);
         for (var i = 0; i < this.state.userinfo[0].following.length; i++) {
-            userList.push(<User login={this.state.userinfo[0].following[i]} openProfil={this.props.openProfil} ></User>);
+            userList.push(<User  userinfo ={this.state.userinfo} login={this.state.userinfo[0].following[i]} openProfil={this.props.openProfil} ></User>);
         }
         this.props.setResearch(userList);
         this.setState({ researched: true })
@@ -84,7 +82,7 @@ class MyProfil extends Component {
     toFollowerResult = () => {
         let userList = []
         for (var i = 0; i < this.state.userinfo[0].followers.length; i++) {
-            userList.push(<User login={this.state.userinfo[0].followers[i]} openProfil={this.props.openProfil}></User>);
+            userList.push(<User userinfo = {this.state.userinfo} login={this.state.userinfo[0].followers[i]} openProfil={this.props.openProfil}></User>);
         }
         this.props.setResearch(userList);
         this.setState({ researched: true })
@@ -145,9 +143,6 @@ class MyProfil extends Component {
 
 
     render() {
-        while (!this.state.userinfo){
-            window.location.reload()
-        }
         return (
             <div>
                 <NavigationPannel userinfo={this.props.userinfo} researched={this.props.researched} setResearch={this.props.setResearch} getUserInfo={this.props.getUserInfo} openProfil={this.props.openProfil} setLogin={this.props.setLogin} setSignup={this.props.setSignup} setLogout={this.props.setLogout} connected={this.props.connected}></NavigationPannel>

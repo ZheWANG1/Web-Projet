@@ -1,2 +1,4 @@
+{"login":"jean","password":"123456","lastname":"Jack","firstname":"jean","following":[],"followers":[],"profilePhoto":"http://localhost:4000/public/images/defaultAvatar.jpg","_id":"JvU9QSVd3lZatgXp"}
 {"login":"Fanxiang","password":"123456","lastname":"Zeng","firstname":"Fanxiang","following":["Zhe"],"followers":["Zhe"],"profilePhoto":"http://localhost:4000/public/images/165187-external-content.duckduckgo.com.jpeg","_id":"Y5QXf6QRU585rbts"}
+{"login":"usertest","password":"123456","lastname":"Francois","firstname":"Xavier","following":[],"followers":[],"profilePhoto":"http://localhost:4000/public/images/defaultAvatar.jpg","_id":"kBbFimEzLosQIXIW"}
 {"login":"Zhe","password":"123456","lastname":"Wang","firstname":"Zhe","following":["Fanxiang"],"followers":["Fanxiang"],"profilePhoto":"http://localhost:4000/public/images/165187-Wang.jpeg","_id":"kmzEZBE57mL80at5"}

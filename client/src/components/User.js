@@ -48,7 +48,7 @@ class User extends Component {
         return (
             <div id="commentaire">
                 
-                {this.props.userinfo.length === 0 ? <Link to="/login">
+                {!sessionStorage.getItem('userinfo') ? <Link to="/login">
                     <img id="commentaire_profilphoto" alt="profil" onClick={() => { this.props.openProfil(this.state.login) }} src={this.state.ProfilePhoto} ></img>
                     <h4 id="username" onClick={() => { this.props.openProfil(this.state.login) }} >{this.state.login}</h4>
                 </Link> :

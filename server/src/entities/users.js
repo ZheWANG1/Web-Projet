@@ -104,14 +104,6 @@ class Users {
 
       })
 
-
-      // let login = db.users.find({ login: login, password: password }, { _id: 1 }); // À remplacer par une requête bd
-      // if (false) {
-      //   //erreur
-      //   reject();
-      // } else {
-      //   resolve(userid);
-      // }
     });
   }
 
